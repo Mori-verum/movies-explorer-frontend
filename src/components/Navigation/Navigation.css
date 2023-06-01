@@ -1,0 +1,14 @@
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation__container {
+    
+}
+
+.navigation__link {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
