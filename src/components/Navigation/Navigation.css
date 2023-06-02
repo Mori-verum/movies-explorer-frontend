@@ -4,7 +4,8 @@
 }
 
 .navigation__container {
-    
+    display: flex;
+    gap: 30px;
 }
 
 .navigation__link {

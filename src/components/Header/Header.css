@@ -1,8 +1,12 @@
 .header {
+    background-color: var(--landing-color);
     padding-top: 18px;
+}
+
+.header__container {
     display: flex;
     justify-content: space-between;
-    background-color: var(--landing-color);
+    
 }
 
 .header__logo {

@@ -7,8 +7,10 @@ function Header(props) {
 
     return (
         <header className="header section">
-            <img className="header__logo" src={headerLogo} alt="Логотип" />
-            <Navigation loggedIn={loggedIn} />
+            <div className="header__container container">
+                <img className="header__logo" src={headerLogo} alt="Логотип" />
+                <Navigation loggedIn={loggedIn} />
+            </div>
         </header>
     )
 }

@@ -1,12 +1,14 @@
 .about {
     color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 70px 0 110px;
 }
 
 .about__title {}
 
 .about__items {
     display: flex;
-    margin-top: 70px;
+    margin-top: 110px;
 }
 
 .about__item {}
