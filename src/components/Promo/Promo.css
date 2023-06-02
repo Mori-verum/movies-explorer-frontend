@@ -1,7 +1,11 @@
 .promo {
-    width: 1280px;
-    padding: 75px 70px 0px;
     background-color: var(--landing-color);
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.promo__text-container {
+
 }
 
 .promo__title {

@@ -1,8 +1,7 @@
 .header {
-    padding: 18px 70px 0;
+    padding-top: 18px;
     display: flex;
     justify-content: space-between;
-    width: 1280px;
     background-color: var(--landing-color);
 }
 

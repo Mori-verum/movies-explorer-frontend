@@ -6,7 +6,7 @@ function Header(props) {
     const loggedIn = false;
 
     return (
-        <header className="header">
+        <header className="header section">
             <img className="header__logo" src={headerLogo} alt="Логотип" />
             <Navigation loggedIn={loggedIn} />
         </header>

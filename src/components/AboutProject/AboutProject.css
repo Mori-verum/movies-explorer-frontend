@@ -1,0 +1,68 @@
+.about {
+    color: var(--text-color);
+}
+
+.about__title {}
+
+.about__items {
+    display: flex;
+    margin-top: 70px;
+}
+
+.about__item {}
+
+.about__item-title {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    margin: 0;
+}
+
+.about__item-description {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 26px 0 0;
+}
+
+.about__timeline {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    text-align: center;
+    margin: 110px 0 0;
+}
+
+.about__timeline-item {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.about__stage-back {
+    background-color: var(--accent-color);
+    color: #000;
+}
+
+.about__stage-front {
+    background-color: #303030;
+}
+
+.about__stage-caption {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #8b8b8b;
+}
