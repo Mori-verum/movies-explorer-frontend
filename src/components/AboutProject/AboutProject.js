@@ -5,7 +5,6 @@ function AboutProject() {
     return (
         <section className="about section">
             <div className="container">
-                {/* <h2 className="about__title section-title">О проекте</h2> */}
                 <SectionTitle title="О проекте" />
                 <div className="about__items">
                     <div className="about__item">

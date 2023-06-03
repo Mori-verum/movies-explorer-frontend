@@ -1,12 +1,11 @@
 .techs {
-    /* margin: 100px 0; */
     background-color: #272727;
     padding: 100px 0;
 }
 
 .container {}
 
-.techs__title {
+.techs__description-title {
     font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -18,7 +17,7 @@
     margin: 90px auto 0;
 }
 
-.techs__subtitle {
+.techs__description-subtitle {
     font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;

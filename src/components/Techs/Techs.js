@@ -7,8 +7,8 @@ function Techs() {
         <section className="techs section">
             <div className="container">
                 <SectionTitle title="Технологии"/>
-                <h3 className="techs__title">7 технологий</h3>
-                <p className="techs__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
+                <h3 className="techs__description-title">7 технологий</h3>
+                <p className="techs__description-subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
                 <div className="techs__stack">
                     <StackItem text="HTML"/>
                     <StackItem text="CSS"/>

@@ -1,0 +1,32 @@
+.portfolio {
+    margin-top: 100px;
+}
+
+.portfolio__container {}
+
+.portfolio__title {
+    font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #8b8b8b8b;
+}
+
+.portfolio__project-list {
+    list-style: none;
+    padding: 0;
+    margin: 50px 0 0;
+}
+
+.portfolio__project-item {
+    border-bottom: 1px solid #424242;
+    padding: 0 0 19px;
+    margin: 0 0 20px;
+}
+
+.portfolio__project-item:last-child {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
