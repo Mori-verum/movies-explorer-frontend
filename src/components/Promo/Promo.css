@@ -10,10 +10,6 @@
     align-items: flex-start;
 }
 
-.promo__text-container {
-
-}
-
 .promo__title {
     font-family: 'Inter', 'Arial', sans-serif;
     color: var(--text-color);
@@ -37,10 +33,7 @@
     max-width: 310px;
 }
 
-.promo__image {}
-
 .promo__button {
-    font-family: 'Inter', 'Arial', sans-serif;
     background-color: transparent;
     color: var(--text-color);
     border: 1px solid #fff;

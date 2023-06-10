@@ -9,7 +9,6 @@
 }
 
 .navigation__link {
-    text-decoration: none;
     color: var(--text-color);
 }
 

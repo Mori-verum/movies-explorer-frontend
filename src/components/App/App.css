@@ -1,14 +1,19 @@
 .App {
-  /* text-align: center; */
-  /* font-family: 'Inter', 'Arial', sans-serif; */
-  /* width: 100vw; */
 }
 
 .main {
   min-height: 70vh;
 }
 
-.link {}
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.link:hover {
+  opacity: .7;
+}
 
 .container {
   max-width: 1280px;
@@ -16,4 +21,13 @@
   margin: 0 auto;
 }
 
-.button {}
+.button {
+  font-family: 'Inter', 'Arial', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.button:hover {
+  opacity: .8;
+}

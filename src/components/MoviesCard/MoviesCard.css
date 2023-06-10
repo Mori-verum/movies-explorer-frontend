@@ -1,7 +1,6 @@
 .card {
     margin: 0 auto;
     width: 360px;
-    /* height: 319px; */
     display: grid;
     grid-template-areas:
         "name duration"
@@ -58,17 +57,34 @@
 }
 
 .card__button {
+    content: 'Сохранить';
     grid-area: button;
     align-self: start;
     justify-self: center;
     width: 100px;
     height: 29px;
     border-radius: 20px;
-    border: none;
     background-color: #313131;
     color: var(--text-color);
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     line-height: 11px;
+}
+
+.card__button_act_save:before {
+    content: 'Сохранить';
+}
+
+.card__button_enabled {
+    background-color: #ee3465;
+    background-image: url('../../images/card__button_enabled.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card__button_act_drop {
+    background-image: url('../../images/card__button_act_drop.svg');
+    background-position: center;
+    background-repeat: no-repeat;
 }
