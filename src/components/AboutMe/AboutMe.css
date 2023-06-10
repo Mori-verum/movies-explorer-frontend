@@ -2,18 +2,13 @@
     padding: 110px 0 125px;
 }
 
-.student__container {
-    /* display: flex; */
-}
-
 .student__info-container {
     display: flex;
+    gap: 40px;
     justify-content: space-between;
     align-items: flex-start;
     margin: 66px 0 0;
 }
-
-.student__text-container {}
 
 .student__info-title {
     font-family: 'Inter', 'Arial', sans-serif;

@@ -9,6 +9,10 @@
   --landing-color: #073042;
 }
 
+.root {
+  width: 100%;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;

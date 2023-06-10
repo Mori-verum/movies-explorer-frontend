@@ -1,6 +1,9 @@
 .header {
+    padding: 18px 0;
+}
+
+.header_landing {
     background-color: var(--landing-color);
-    padding-top: 18px;
 }
 
 .header__container {

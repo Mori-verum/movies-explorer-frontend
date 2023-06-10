@@ -1,18 +1,19 @@
 .about {
     color: var(--text-color);
     background-color: var(--background-color);
-    padding: 70px 0 110px;
+    padding: 110px 0 96px;
 }
-
-.about__title {}
 
 .about__items {
     display: flex;
-    margin-top: 110px;
-    gap: 60px;
+    margin-top: 70px;
+    justify-content: space-between;
+    gap: 40px;
 }
 
-.about__item {}
+.about__item {
+    max-width: 550px;
+}
 
 .about__item-title {
     font-family: 'Inter', 'Arial', sans-serif;
