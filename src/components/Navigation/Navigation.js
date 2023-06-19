@@ -8,6 +8,7 @@ function Navigation( props ) {
         <>
         <Link className="navigation__link navigation__link_path_movies link" to="/movies">Фильмы</Link>
         <Link className="navigation__link navigation__link_path_saved-movies link" to="/saved-movies">Сохранённые фильмы</Link>
+        <Link className='navigation__link navigation__link_path_profile link' to="/profile"></Link>
         </>
     ) : (
         <>

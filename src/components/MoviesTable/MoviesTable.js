@@ -2,16 +2,16 @@ import Search from '../Search/Search';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoreMovies from '../MoreMovies/MoreMovies';
 
-import cards from '../../utils/cards';
+// import { cards, cardsSavedMovies } from '../../utils/cards';
 
-function Movies() {
+function MoviesTable(props) {
     return (
         <main className="main">
             <Search />
-            <MoviesCardList cards = { cards } />
+            <MoviesCardList cards = { props.cards } />
             <MoreMovies />
         </main>
     )
 }
 
-export default Movies;
+export default MoviesTable;

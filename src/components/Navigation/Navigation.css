@@ -5,10 +5,59 @@
 
 .navigation__container {
     display: flex;
-    gap: 30px;
+    gap: 20px;
+    align-items: center;
 }
 
 .navigation__link {
     color: var(--text-color);
 }
 
+.navigation__link_path_signup {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.navigation__link_path_signin {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    width: 76px;
+    height: 32px;
+    background-color: var(--accent-color);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+.navigation__link_path_movies {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.navigation__link_path_saved-movies {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.navigation__link_path_profile {
+    width: 100px;
+    height: 30px;
+    background-image: url('../../images/header__profile-btn.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 30px;
+}

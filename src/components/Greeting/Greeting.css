@@ -1,0 +1,17 @@
+.greeting {
+    /* margin: 70px auto 0; */
+}
+
+.greeting__container {
+    max-width: 396px;
+}
+
+.greeting__text {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: var(--text-color);
+    margin: 36px 0 0;
+}
