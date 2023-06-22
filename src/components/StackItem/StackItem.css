@@ -19,3 +19,14 @@
     color: var(--text-color);
     margin: 0;
 }
+
+@media (max-width: 980px) {
+    .stack-item {
+        width: 84px;
+        height: 57px;
+    }
+
+    .stack-item__text {
+        font-size: 12px;
+    }
+}

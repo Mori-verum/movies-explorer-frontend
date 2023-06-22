@@ -1,7 +1,7 @@
+import './AboutMe.css'
 import ContactLink from '../ContactLink/ContactLink';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import studentImage from '../../images/XxFJQcjgTVw.jpg'
-import './AboutMe.css'
 import Portfolio from '../Portfolio/Portfolio';
 
 function AboutMe() {
@@ -25,5 +25,7 @@ function AboutMe() {
         </section>
     )
 }
+
+
 
 export default AboutMe;

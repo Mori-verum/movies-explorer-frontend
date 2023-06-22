@@ -22,7 +22,7 @@
 }
 
 .button {
-  font-family: 'Inter', 'Arial', sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   border: none;
   cursor: pointer;
   transition: all .2s;
@@ -31,4 +31,16 @@
 
 .button:hover {
   opacity: .8;
+}
+
+@media (max-width: 980px) {
+  .container {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    padding: 0 18px;
+  }
 }

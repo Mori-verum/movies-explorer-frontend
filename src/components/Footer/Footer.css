@@ -12,7 +12,7 @@
 
 .footer__title {
     grid-area: title;
-    font-family: 'Inter', 'Arial', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -26,7 +26,7 @@
 }
 
 .footer__copyright {
-    font-family: 'Inter', 'Arial', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -44,10 +44,54 @@
 }
 
 .footer__link {
-    font-family: 'Inter', 'Arial', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;
     color: var(--text-color);
+}
+
+@media (max-width: 980px) {
+    .footer__container {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 650px) {
+    .footer {
+        padding: 0 0 20px;
+        margin-top: 70px;
+    }
+
+    .footer__container {
+        padding: 0 10px 0;
+        grid-template-areas:
+        "title"
+        "navigation"
+        "copyright";
+    }
+
+    .footer__title {
+        font-size: 12px;
+        margin-bottom: 17px;
+    }
+
+    .footer__navigation {
+        display: block;
+    }
+
+    .footer__copyright {
+        margin-top: 28px;
+        font-size: 12px;
+        color: #8b8b8b;
+        text-align: center;
+    }
+
+    .footer__link {
+        display: block;
+        margin-top: 12px;
+        text-align: center;
+        font-size: 12px;
+    }
 }
