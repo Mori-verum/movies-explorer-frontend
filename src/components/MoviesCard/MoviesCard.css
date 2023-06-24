@@ -1,6 +1,8 @@
 .card {
+    box-sizing: border-box;
     margin: 0 auto;
     width: 360px;
+    height: 319px;
     display: grid;
     grid-template-areas:
         "name duration"
@@ -87,4 +89,44 @@
     background-image: url('../../images/card__button_act_drop.svg');
     background-position: center;
     background-repeat: no-repeat;
+}
+
+@media (max-width: 980px) {
+    .card {
+        width: 342px;
+        height: 309px;
+    }
+
+    .card__img {
+        height: 190px;
+    }
+
+    .card__link {
+        height: 190px;
+    }
+}
+
+@media (max-width: 650px) {
+    .card {
+        width: 300px;
+        height: 271px;
+        grid-gap: 14px 14px;
+        padding: 14px 0;
+    }
+
+    .card__img {
+        height: 168px;
+    }
+
+    .card__link {
+        height: 168px;
+    }
+
+    .card__name {
+        font-size: 12px;
+    }
+
+    .card__duration {
+        font-size: 10px;
+    }
 }

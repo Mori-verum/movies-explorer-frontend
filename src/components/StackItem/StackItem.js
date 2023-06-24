@@ -1,10 +1,10 @@
 import './StackItem.css'
 
-function StackItem({ text }) {
+function StackItem({ key, text }) {
     return (
-        <div className="stack-item">
+        <li key={key} className="stack-item">
             <p className="stack-item__text">{ text }</p>
-        </div>
+        </li>
     )
 }
 

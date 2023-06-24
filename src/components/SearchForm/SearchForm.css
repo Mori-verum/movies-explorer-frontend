@@ -1,7 +1,3 @@
-/* .search-form {
-    margin-top: 80px;
-} */
-
 .search-form__container {
     display: flex;
     gap: 10px;
@@ -47,3 +43,9 @@
     border-left: 1px solid #fff;
 }
 
+@media (max-width: 650px) {
+    .search-form__input {
+        height: 44px;
+        padding-left: 13px;
+    }
+}

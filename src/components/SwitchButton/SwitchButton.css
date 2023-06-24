@@ -54,3 +54,20 @@
     margin: 0;
     color: var(--text-color);
 }
+
+@media (max-width: 980px) {
+    .switcher {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    .switcher {
+        margin-top: 46px;
+        gap: 13px;
+    }
+
+    .switcher__text {
+        font-size: 11px;
+    }
+}

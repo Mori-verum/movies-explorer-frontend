@@ -30,6 +30,7 @@
 
 .techs__stack {
     margin: 100px 0 0;
+    padding: 0;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;

@@ -8,3 +8,15 @@
     border-bottom: 1px solid #424242;
     margin-bottom: 10px;
 }
+
+@media (max-width: 980px) {
+    .search__container {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 650px) {
+    .search__container {
+        padding: 0 14px;
+    }
+}

@@ -2,3 +2,15 @@
     padding-top: 50px;
     padding-bottom: 80px;
 }
+
+@media (max-width: 980px) {
+    .more-movies__container {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 650px) {
+    .more-movies__container {
+        padding: 0 10px;
+    }
+}

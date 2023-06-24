@@ -1,6 +1,7 @@
 import './ProfileEdit.css'
 
 function ProfileEdit(props) {
+    
 
     const button = props.isFormActive ? <button type="submit" className="profile-edit__submit">Сохранить</button> : <button className="profile-edit__edit-button">Редактировать</button>;
     const isDesabled = props.isFormActive ? false : true;

@@ -6,10 +6,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    list-style: none;
 }
 
 .stack-item__text {
-    font-family: 'Inter', 'Arial', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
