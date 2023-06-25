@@ -3,13 +3,16 @@
 }
 
 .profile-logout__container {
-    width: 410px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 410px;
     align-items: center;
 }
 
 .profile-logout__button {
     cursor: pointer;
-    width: 410px;
+    align-items: center;
+    width: 100%;
     background-color: transparent;
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
@@ -22,4 +25,10 @@
 
 .profile-logout__button_disabled {
     display: none;
+}
+
+@media (max-width: 450px) {
+    .profile-logout__container {
+        max-width: 260px;
+    }
 }

@@ -1,16 +1,15 @@
 .profile-edit {
-    margin: 123px 0 0;
+    margin: 127px 0 0;
 }
 
 .profile-edit__container {
-    width: 410px;
+    max-width: 410px;
 }
 
 .profile-edit__form {
+    box-sizing: border-box;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    max-width: 410px;
-    width: 100%;
 }
 
 .profile-edit__fieldset {
@@ -25,7 +24,7 @@
 .profile-edit__fieldset:last-child {
     border: none;
     padding: 0;
-    margin-bottom: 218px;
+    margin-bottom: 215px;
 }
 
 .profile-edit__input-label {
@@ -46,7 +45,7 @@
     font-size: 11px;
     line-height: 13px;
     color: var(--text-color);
-    width: 85%;
+    width: 75%;
     text-align: right;
 }
 
@@ -91,4 +90,17 @@
     line-height: 13px;
     color: #ff004c;
     margin-bottom: 20px;
+}
+
+@media (max-width: 780px) {
+    .profile-edit {
+        margin: 30px 0 0;
+    }
+}
+
+@media (max-width: 450px) {
+    .profile-edit__container {
+        width: 260px;
+        padding: 0 auto;
+    }
 }

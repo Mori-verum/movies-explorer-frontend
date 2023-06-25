@@ -1,5 +1,7 @@
 .profile-greeting {
-    margin: 74px 0 0;
+    margin: 70px 0 0;
+    align-self: center;
+    justify-self: center;
 }
 
 .profile-greeting__title {
@@ -10,4 +12,21 @@
     line-height: 29px;
     color: var(--text-color);
     text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 780px) {
+    .profile-greeting {
+        margin: 170px 0 0;
+    }
+}
+
+@media (max-width: 450px) {
+    .profile-greeting {
+        margin: 70px 0 50px;
+    }
+
+    .profile-greeting__container {
+        padding: 0 30px;
+    }
 }

@@ -1,3 +1,5 @@
+import "./Profile.css"
+
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import ProfileGreeting from "../ProfileGreeting/ProfileGreeting";
 import ProfileLogout from "../ProfileLogout/ProfileLogout";
@@ -7,9 +9,11 @@ function Profile() {
 
     return (
         <main className="main">
-            <ProfileGreeting />
-            <ProfileEdit isFormActive={ isFormActive } />
-            <ProfileLogout isFormActive={ isFormActive } />
+            <div className="profile">
+                <ProfileGreeting />
+                <ProfileEdit isFormActive={isFormActive} />
+                <ProfileLogout isFormActive={isFormActive} />
+            </div>
         </main>
     )
 }
