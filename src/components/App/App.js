@@ -21,8 +21,8 @@ function App() {
   const loggedIn = false;
   // const isHeaderVisible = ( pathname === "/signup" || pathname === "/signin")  ? false : true;
   // const isFooterVisible = ( pathname === "/signup" || pathname === "/signin" ) ? false : true;
-  const isHeaderVisible = true;
-  const isFooterVisible = true;
+  const isHeaderVisible = false;
+  const isFooterVisible = false;
 
   const inputsForRegister = (
     <>

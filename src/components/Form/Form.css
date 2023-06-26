@@ -1,6 +1,6 @@
 .form {
     height: 100%;
-    margin: 40px auto 0;
+    /* margin: 40px auto 0; */
     display: grid;
     grid-template-areas:
     "inputs"
@@ -39,4 +39,11 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+}
+
+@media (max-width: 450px) {
+    .form__submit {
+        margin: 160px 0 0;
+        font-size: 12px;
+    }
 }

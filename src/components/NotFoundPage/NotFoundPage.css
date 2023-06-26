@@ -1,7 +1,6 @@
 .not-found-page {
     box-sizing: border-box;
     display: grid;
-    /* grid-template-columns: 1fr; */
     grid-template-rows: repeat(2, auto);
     height: 100vh;
     padding: 60px 0;
@@ -37,4 +36,23 @@
     font-family: 'Inter', Arial, sans-serif;
     justify-self: center;
     align-self: end;
+}
+
+@media (max-width: 450px) {
+    .not-found-page {
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .not-found-page__title {
+        font-size: 80px;
+    }
+
+    .not-found-page__subtitle {
+        font-size: 12px;
+    }
+
+    .not-found-page__button {
+        font-size: 12px;
+        align-self: center;
+    }
 }

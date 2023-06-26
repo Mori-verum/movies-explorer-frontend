@@ -3,7 +3,6 @@
 }
 
 .click-through__container {
-    /* max-width: 396px; */
     padding: 0;
 }
 
@@ -14,9 +13,14 @@
     line-height: 17px;
     text-align: center;
     color: #8B8B8B;
-    margin: 16px 0 0;
 }
 
 .click-through__link {
     color: var(--button-color);
+}
+
+@media (max-width: 450px) {
+    .click-through__subtitle {
+        font-size: 12px;
+    }
 }
