@@ -11,20 +11,26 @@
 
 .navigation__link {
     color: var(--text-color);
-}
-
-.navigation__link_path_signup {
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
+}
+
+.navigation__link_active {
+    border-bottom: 2px solid var(--text-color);
+}
+
+.navigation__link_path_main {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.navigation__link_path_signup {
     font-size: 12px;
     line-height: 16px;
 }
 
 .navigation__link_path_signin {
-    font-family: 'Inter', Arial, sans-serif;
-    font-style: normal;
-    font-weight: 500;
     font-size: 12px;
     line-height: 16px;
     width: 76px;
@@ -38,16 +44,11 @@
 }
 
 .navigation__link_path_movies {
-    font-family: 'Inter', Arial, sans-serif;
-    font-style: normal;
-    font-weight: 500;
     font-size: 14px;
     line-height: 18px;
 }
 
 .navigation__link_path_saved-movies {
-    font-family: 'Inter', Arial, sans-serif;
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -60,6 +61,21 @@
     background-position: center;
     background-repeat: no-repeat;
     margin-left: 30px;
+}
+
+@media (max-width: 780px) {
+    .navigation__link_path_movies {
+        font-size: 18px;
+    }
+    
+    .navigation__link_path_saved-movies {
+        font-size: 18px;
+    }
+    
+    .navigation__link_path_profile {
+        font-size: 14px;
+        margin: 0;
+    }
 }
 
 @media (max-width: 650px) {

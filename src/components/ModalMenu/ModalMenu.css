@@ -1,0 +1,42 @@
+.modal-menu {
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.modal-menu_opened {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-menu__close-button {
+    position: absolute;
+    top: 23px;
+    right: 23px;
+    background-image: url('../../images/close-button.svg');
+    width: 23px;
+    height: 23px;
+    background-color: transparent;
+    background-size: contain;
+    z-index: 10;
+}
+
+.menu__content {
+    position: absolute;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background-color: var(--background-color);
+    display: grid;
+    grid-template-rows: 20% repeat(2, auto) 1fr 64px;
+    gap: 28px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: end;
+}

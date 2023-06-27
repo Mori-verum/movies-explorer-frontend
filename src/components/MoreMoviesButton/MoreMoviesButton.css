@@ -10,3 +10,7 @@
     line-height: 15px;
     height: 36px;
 }
+
+.more-movies-button_hidden {
+    display: none;
+}

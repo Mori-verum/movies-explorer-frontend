@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom'
+import React,  { useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
@@ -9,58 +9,98 @@ import PageWithForm from '../PageWithForm/PageWithForm';
 import Main from '../Main/Main';
 import InputFieldset from '../InputFieldset/InputFieldset';
 
-// import { useLocation } from 'react-router-dom';
+import { paths } from '../../utils/config';
 
 import { cards, cardsSavedMovies } from '../../utils/cards';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
-  //пока не используется логика приложения, используется "хардкод" для отображения элементов, которым можно управлять из основного компонента
-  // let { pathname } = useLocation();
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-  const loggedIn = false;
-  // const isHeaderVisible = ( pathname === "/signup" || pathname === "/signin")  ? false : true;
-  // const isFooterVisible = ( pathname === "/signup" || pathname === "/signin" ) ? false : true;
-  const isHeaderVisible = false;
-  const isFooterVisible = false;
+  const { pathname } = useLocation();
+
+  const loggedIn = true;
+
+  const isHeaderVisible = Object.values(paths).includes(pathname)
+    && (pathname !== paths.signIn)
+    && (pathname !== paths.signUp);
+  const isFooterVisible = Object.values(paths).includes(pathname)
+    && (pathname !== paths.signIn)
+    && (pathname !== paths.signUp)
+    && (pathname !== paths.profile);
 
   const inputsForRegister = (
     <>
-      <InputFieldset name="name" label="Имя" />
-      <InputFieldset name="email" label="E-mail" />
-      <InputFieldset name="password" label="Пароль" />
+      <InputFieldset
+        required={true}
+        type="text"
+        name="name"
+        label="Имя"
+        placeholder="Введите имя"
+        id="profile-name"
+        />
+      <InputFieldset
+        required={true}
+        type="email"
+        name="email"
+        label="E-mail"
+        placeholder="Введите email"
+        id="profile-email"
+      />
+      <InputFieldset
+        required={true}
+        type="password"
+        name="password"
+        label="Пароль"
+        placeholder="Введите пароль"
+        id="profile-password"
+      />
     </>
   )
 
   const inputsForLogin = (
     <>
-      <InputFieldset name="email" label="E-mail" />
-      <InputFieldset name="password" label="Пароль" />
+      <InputFieldset
+        required={true}
+        type="email"
+        name="email"
+        label="E-mail"
+        placeholder="Введите email"
+        id="profile-email"
+      />
+      <InputFieldset
+        required={true}
+        type="password"
+        name="password"
+        label="Пароль"
+        placeholder="Введите пароль"
+        id="profile-password"
+      />
     </>
   )
 
   return (
     <div className="App">
-      {isHeaderVisible ? <Header loggedIn={ loggedIn } /> : null}
+      {isHeaderVisible ? <Header windowSize={ windowSize } loggedIn={loggedIn} /> : null}
       <Routes>
-        <Route exact path="/" element={<Main />} />
-        <Route path="/movies" element={<MoviesTable cards={cards} />} />
-        <Route path="/saved-movies" element={<MoviesTable cards={cardsSavedMovies} />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signup" element={<PageWithForm
+        <Route exact path={paths.main} element={<Main />} />
+        <Route path={paths.movies} element={<MoviesTable cards={cards} />} />
+        <Route path={paths.savedMovies} element={<MoviesTable cards={cardsSavedMovies} />} />
+        <Route path={paths.profile} element={<Profile />} />
+        <Route path={paths.signUp} element={<PageWithForm
           formInputs={inputsForRegister}
           greetingText="Добро пожаловать!"
           formSubmitText="Зарегистрироваться"
           clickThroughText="Уже зарегистрированы?"
-          clickThroughPath="/signin"
+          clickThroughPath={paths.signIn}
           clickThroughLinkText="Войти"
         />} />
-        <Route path="/signin" element={<PageWithForm
+        <Route path={paths.signIn} element={<PageWithForm
           formInputs={inputsForLogin}
           greetingText="Рады видеть!"
           formSubmitText="Войти"
           clickThroughText="Ещё не зарегистрированы?"
-          clickThroughPath="/signup"
+          clickThroughPath={paths.signUp}
           clickThroughLinkText="Регистрация"
         />} />
         <Route path="*" element={<NotFoundPage />} />

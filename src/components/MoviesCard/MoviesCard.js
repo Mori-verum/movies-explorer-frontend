@@ -1,11 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css'
+import { paths } from '../../utils/config'
 
 function MoviesCard(props) {
     let { pathname } = useLocation();
     const isLiked = false;
 
-    const button = pathname === '/saved-movies' ? <button className="card__button button card__button_act_drop"></button> : <button className={isLiked ? "card__button button card__button_enabled" : "card__button button card__button_act_save"}></button>;
+    const button = pathname === paths.main ? <button className="card__button button card__button_act_drop"></button> : <button className={isLiked ? "card__button button card__button_enabled" : "card__button button card__button_act_save"}></button>;
 
     return (
         <article className="card">
