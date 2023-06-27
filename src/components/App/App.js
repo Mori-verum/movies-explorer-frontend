@@ -19,6 +19,7 @@ function App() {
 
   const { pathname } = useLocation();
 
+  //состояние авторизации пользователя пока переключается вручную
   const loggedIn = true;
 
   const isHeaderVisible = Object.values(paths).includes(pathname)

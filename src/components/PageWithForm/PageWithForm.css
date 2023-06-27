@@ -7,16 +7,6 @@
     margin: 40px auto 0;
 }
 
-@media (max-width: 780px) {
-    .page-with-form {
-        padding: 230px 0;
-    }
-    
-    .page-with-form__container {
-        max-width: 396px;
-    }
-}
-
 @media (max-width: 450px) {
     .page-with-form {
         padding: 70px 0 30px;
