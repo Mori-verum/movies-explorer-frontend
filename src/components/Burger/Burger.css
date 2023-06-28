@@ -1,0 +1,23 @@
+.burger {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger__line {
+    display: block;
+    width: 21px;
+    height: 3px;
+    background-color: #fff;
+    margin-bottom: 4px;
+}
+
+.burger__line:last-child {
+    margin-bottom: 0;
+}

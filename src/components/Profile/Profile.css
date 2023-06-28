@@ -1,0 +1,16 @@
+.profile {
+    display: grid;
+}
+
+@media (max-width: 780px) {
+    .profile {
+        grid-template-rows: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .profile {
+        grid-template-rows: auto 1fr auto;
+        justify-content: center;
+    }
+}

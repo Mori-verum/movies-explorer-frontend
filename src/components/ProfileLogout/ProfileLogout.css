@@ -1,0 +1,34 @@
+.profile-logout {
+    margin-top: 12px;
+}
+
+.profile-logout__container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 410px;
+    align-items: center;
+}
+
+.profile-logout__button {
+    cursor: pointer;
+    align-items: center;
+    width: 100%;
+    background-color: transparent;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #ee3465;
+    border: none;
+}
+
+.profile-logout__button_disabled {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .profile-logout__container {
+        max-width: 260px;
+    }
+}

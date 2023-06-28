@@ -1,0 +1,26 @@
+.greeting__container {
+    max-width: 396px;
+}
+
+.greeting__text {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: var(--text-color);
+    margin: 36px 0 0;
+}
+
+@media (max-width: 450px) {
+    .greeting__text {
+        text-align: center;
+        margin: 50px 0 0;
+    }
+
+    .greeting__container {
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+    }
+}

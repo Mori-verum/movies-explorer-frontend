@@ -1,0 +1,20 @@
+.page-with-form {
+    padding: 70px 0;
+}
+
+.page-with-form__container {
+    max-width: 396px;
+    margin: 40px auto 0;
+}
+
+@media (max-width: 450px) {
+    .page-with-form {
+        padding: 70px 0 30px;
+    }
+    
+    .page-with-form__container {
+        max-width: 396px;
+        padding: 0 30px;
+        margin-top: 80px;
+    }
+}

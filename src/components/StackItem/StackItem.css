@@ -1,0 +1,33 @@
+.stack-item {
+    width: 90px;
+    height: 60px;
+    background-color: #303030;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.stack-item__text {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: var(--text-color);
+    margin: 0;
+}
+
+@media (max-width: 980px) {
+    .stack-item {
+        width: 84px;
+        height: 57px;
+    }
+
+    .stack-item__text {
+        font-size: 12px;
+    }
+}
