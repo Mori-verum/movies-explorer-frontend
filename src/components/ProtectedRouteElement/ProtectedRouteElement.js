@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { paths } from "../../utils/config"
+import { paths } from "../../utils/config";
 
 const ProtectedRouteElement = ({ element: Component, ...props }) => {
     return (

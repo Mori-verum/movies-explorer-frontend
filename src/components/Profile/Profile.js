@@ -1,5 +1,4 @@
 import "./Profile.css"
-
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import ProfileGreeting from "../ProfileGreeting/ProfileGreeting";
 import ProfileLogout from "../ProfileLogout/ProfileLogout";

@@ -14,6 +14,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import { paths } from '../../utils/config';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import { mainApi } from '../../utils/Api/MainApi';
+import currentUserContext from '../../contexts/currentUserContext';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
   }
 
   return (
+    <currentUserContext.Provider value={ userData }>
     <div className="App">
       {isHeaderVisible ? <Header windowSize={windowSize} loggedIn={loggedIn} /> : null}
       <Routes>
@@ -88,7 +90,7 @@ function App() {
         <Route path={paths.profile} element={<ProtectedRouteElement
           element={Profile}
           handleLogout={handleLogout}
-          profileData={userData}
+          // profileData={userData}
           loggedIn={loggedIn}
           windowSize={windowSize}
         />} />
@@ -110,6 +112,7 @@ function App() {
       </Routes>
       {isFooterVisible ? <Footer /> : null}
     </div>
+    </currentUserContext.Provider>
   );
 }
 
