@@ -4,15 +4,15 @@ import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import ProfileGreeting from "../ProfileGreeting/ProfileGreeting";
 import ProfileLogout from "../ProfileLogout/ProfileLogout";
 
-function Profile() {
+function Profile(props) {
     const isFormActive = false;
 
     return (
         <main className="main">
             <div className="profile">
                 <ProfileGreeting />
-                <ProfileEdit isFormActive={isFormActive} />
-                <ProfileLogout isFormActive={isFormActive} />
+                <ProfileEdit profileData={props.profileData} isFormActive={isFormActive} />
+                <ProfileLogout handleLogout={props.handleLogout} isFormActive={isFormActive} />
             </div>
         </main>
     )

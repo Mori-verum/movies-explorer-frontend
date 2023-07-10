@@ -5,6 +5,8 @@ function InputFieldset(props) {
         <fieldset className="fieldset">
             <label className="fieldset__input-label" htmlFor={props.name}>{props.label}</label>
             <input
+                onChange={props.onChange}
+                value={props.value}
                 required={props.required}
                 pattern={props.pattern ?? null}
                 type={props.type ?? ''}

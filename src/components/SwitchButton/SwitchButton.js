@@ -1,11 +1,11 @@
 import './SwitchButton.css'
 
-function SwitchButton({ text }) {
+function SwitchButton(props) {
     return (
         <label className="switcher">
-            <input className="switcher__checkbox" type="checkbox" />
+            <input defaultChecked={props.isSwitchButtonActive} onClick={props.onClick} className="switcher__checkbox" type="checkbox" />
             <span className="switcher__slider"></span>
-            <p className="switcher__text">{ text }</p>
+            <p className="switcher__text">{ props.text }</p>
         </label>
     )
 }
