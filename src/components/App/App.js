@@ -3,7 +3,6 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import './App.css';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import MoviesTable from '../MoviesTable/MoviesTable'
 import Profile from '../Profile/Profile';
 import PageWithForm from '../PageWithForm/PageWithForm';
 import Main from '../Main/Main';
@@ -15,6 +14,8 @@ import { paths } from '../../utils/config';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import { mainApi } from '../../utils/Api/MainApi';
 import currentUserContext from '../../contexts/currentUserContext';
+import AllMovies from '../AllMovies/AllMovies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 
 function App() {
@@ -93,12 +94,12 @@ function App() {
         <Routes>
           <Route exact path={paths.main} element={<Main />} />
           <Route path={paths.movies} element={<ProtectedRouteElement
-            element={MoviesTable}
+            element={AllMovies}
             loggedIn={loggedIn}
             windowSize={windowSize}
           />} />
           <Route path={paths.savedMovies} element={<ProtectedRouteElement
-            element={MoviesTable}
+            element={SavedMovies}
             loggedIn={loggedIn}
           />} />
           <Route path={paths.profile} element={<ProtectedRouteElement
