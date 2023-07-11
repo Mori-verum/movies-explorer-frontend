@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import './App.css';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
@@ -23,6 +23,7 @@ function App() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const isHeaderVisible = Object.values(paths).includes(pathname)
     && (pathname !== paths.signIn)
@@ -46,6 +47,7 @@ function App() {
               }
               setLoggedIn(true);
               setUserData(userData);
+              navigate(paths.main, {replace: true})
             }
           });
       }

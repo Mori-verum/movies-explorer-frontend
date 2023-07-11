@@ -6,10 +6,13 @@ import { paths } from '../../utils/config'
 
 function SearchForm({ getCards }) {
     const { pathname } = useLocation();
-    const [searchData, setSearchData] = useState({
-            inputValue: "",
-            isShortMovies: false
-        });
+    const [searchData, setSearchData] = useState(pathname === paths.movies ? JSON.parse(localStorage.getItem('search-movies-data')) ?? {
+        inputValue: "",
+        isShortMovies: false
+    } : JSON.parse(localStorage.getItem('search-saved-movies-data')) ?? {
+        inputValue: "",
+        isShortMovies: false
+    });
 
     useEffect(() => {
         setSearchData(pathname === paths.movies ? JSON.parse(localStorage.getItem('search-movies-data')) ?? {
@@ -19,14 +22,22 @@ function SearchForm({ getCards }) {
             inputValue: "",
             isShortMovies: false
         })
-    }, [pathname]);
+    }, [pathname])
+
+    useEffect(() => {
+        if (pathname === paths.movies) {
+            localStorage.setItem('search-movies-data', JSON.stringify(searchData));
+        } else {
+            localStorage.setItem('search-saved-movies-data', JSON.stringify(searchData));
+        }
+    }, [searchData, pathname]);
 
     function handleChange(evt) {
         setSearchData((prev) => ({...prev, inputValue: evt.target.value}));
     }
 
-    function handleSwitchShortMovies() {
-        if (!searchData.isShortMovies) {
+    function handleSwitchShortMovies(evt) {
+        if(!searchData.isShortMovies) {
             setSearchData((prev) => ({...prev, isShortMovies: true}));
         } else {
             setSearchData((prev) => ({...prev, isShortMovies: false}));

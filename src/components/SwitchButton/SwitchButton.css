@@ -35,11 +35,15 @@
     transition: ease .5s;
 }
 
-.switcher__checkbox:checked + .switcher__slider {
+.switcher__checkbox_checked {
     background-color: var(--accent-color);
 }
 
-.switcher__checkbox:checked + .switcher__slider:before {
+.switcher__slider_checked {
+    background-color: var(--accent-color);
+}
+
+.switcher__slider_checked:before {
     transform: translateX(16px);
     background: #fff;
 }
