@@ -54,7 +54,7 @@ function MoviesTable(props) {
     }, [props.windowSize])
 
     useEffect(() => {
-        if(!allMovies.length) {
+        if (!allMovies.length && !moviesForRendering) {
             setAreMoviesLoading(true);
         }
         moviesApi.getAllMovies()
@@ -62,19 +62,38 @@ function MoviesTable(props) {
                 setAllMovies(movies)
             })
             .catch(err => {
-                setAreMoviesLoading(false);
-                setTooltip({ isVisible: true, message: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" });
+                console.log(err);
+                if (pathname === paths.movies) {
+                    setAreMoviesLoading(false);
+                    setTooltip({ isVisible: true, message: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" });
+                }
             })
             .finally(() => {
                 setAreMoviesLoading(false);
             })
     }, [])
 
-    // useEffect(() => {
-    //     mainApi.getSavedMovies()
-    //     .then(res => console.log(movies))
-    //     .catch(err => console.log(err))
-    // }, [movies])
+    useEffect(() => {
+        if (!savedMovies.length) {
+            setAreMoviesLoading(true);
+        }
+        mainApi.getSavedMovies()
+            .then(res => {
+                setSavedMovies(res);
+                if (pathname === paths.savedMovies && !savedMovies.length) {
+                    setTooltip({ isVisible: true, message: "Сохранённых фильмов нет" });
+                }
+            })
+            .catch(err => {
+                if (pathname === paths.savedMovies) {
+                    console.log(err);
+                    setTooltip({ isVisible: true, message: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" });
+                }
+            })
+            .finally(() => {
+                setAreMoviesLoading(false);
+            })
+    }, [])
 
     useEffect(() => {
         localStorage.setItem('all-movies', JSON.stringify(allMovies));
@@ -82,17 +101,12 @@ function MoviesTable(props) {
 
     useEffect(() => {
         localStorage.setItem('filtered-movies', JSON.stringify(filteredMovies));
-        // localStorage.setItem('saved-movies', JSON.stringify(savedMovies));
     }, [filteredMovies]);
-
-    // useEffect(() => {
-    //     localStorage.setItem('saved-movies', JSON.stringify(savedMovies));
-    // }, [savedMovies]);
 
     useEffect(() => {
         let isTooltip;
         let tooltipMessage;
-        let uploadedMovies;
+        let uploadedMovies = [];
         if (pathname === paths.movies) {
             if (!wereMoviesUploaded && allMovies.length && !filteredMovies.length) {
                 isTooltip = true;
@@ -101,10 +115,16 @@ function MoviesTable(props) {
                 isTooltip = true;
                 tooltipMessage = "Ничего не найдено :(";
             }
-            uploadedMovies = filteredMovies.slice(0, moviesAmount);
+            for (const movie of filteredMovies.slice(0, moviesAmount)) {
+                for (const savedMovie of savedMovies) {
+                    if (savedMovie.movieId === movie.id) {
+                        movie.liked = true;
+                    }
+                }
+                uploadedMovies.push(movie);
+            }
             setMoviesForRendering(uploadedMovies);
         } else {
-            setAreMoviesLoading(false);
             uploadedMovies = savedMovies;
             isTooltip = !uploadedMovies.length;
             tooltipMessage = "Сохранённых фильмов нет";
@@ -139,35 +159,42 @@ function MoviesTable(props) {
         // setSearchSavedMoviesData({ inputValue: keyWord, isShortMovies: isShortMovies ?? false });
     }
 
-    // function handleSaveMovie(movieData) {
-    //     mainApi.addMovie({
-    //         country: movieData?.country ?? 'No country',
-    //         director: movieData?.director ?? 'No director',
-    //         duration: movieData?.duration ?? 0,
-    //         year: movieData?.year ?? '0000',
-    //         description: movieData?.description ?? 'No description',
-    //         image: movieData.image.url ? `https://api.nomoreparties.co${movieData.image.url}` : '',
-    //         trailerLink: movieData?.trailerLink ?? '',
-    //         thumbnail: movieData.image.formats.thumbnail.url ? 'https://api.nomoreparties.co' + movieData.image.formats.thumbnail.url : '',
-    //         movieId: movieData.id,
-    //         nameRU: movieData?.nameRU ?? 'No nameRU',
-    //         nameEN: movieData?.nameEN ?? 'No nameEN',
-    //     })
-    //         .then((savedMovie) => {
-    //             // console.log(savedMovie)
-    //             setSavedMovies(prevUsersMovies => {
-    //                 return [...prevUsersMovies, savedMovie];
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log(err.message)
-    //         });
-    // }
+    function handleSaveMovie(movieData) {
+        mainApi.addMovie({
+            country: movieData?.country ?? 'No country',
+            director: movieData?.director ?? 'No director',
+            duration: movieData?.duration ?? 0,
+            year: movieData?.year ?? '0000',
+            description: movieData?.description ?? 'No description',
+            image: movieData.image.url ? `https://api.nomoreparties.co${movieData.image.url}` : '',
+            trailer: movieData?.trailerLink ?? '',
+            thumbnail: movieData.image.formats.thumbnail.url ? 'https://api.nomoreparties.co' + movieData.image.formats.thumbnail.url : '',
+            movieId: movieData.id,
+            nameRU: movieData?.nameRU ?? 'No nameRU',
+            nameEN: movieData?.nameEN ?? 'No nameEN',
+        })
+            .then((savedMovie) => {
+                setSavedMovies(prevUsersMovies => {
+                    return [...prevUsersMovies, savedMovie];
+                });
+            })
+            .catch(err => {
+                console.log(err.message)
+            });
+    }
+
+    function handleDeleteMovie(movie) {
+        mainApi.deleteMovie(movie._id)
+        .then((res) => {
+            setSavedMovies((state) => state.filter((c) => c._id !== movie._id))
+        })
+        .catch(err => console.log(err))
+    }
 
     return (
         <main className="main">
             <Search getCards={pathname === paths.movies ? getFilteredCards : getfilteredSavedCards} />
-            <MoviesCardList movies={moviesForRendering} savedMovies={savedMovies} />
+            <MoviesCardList handleDeleteMovie={handleDeleteMovie} handleSaveMovie={handleSaveMovie} savedMovies={savedMovies} movies={pathname === paths.movies ? moviesForRendering : savedMovies} />
             {tooltip.isVisible ? <MoviesTableTooltip text={tooltip.message} /> : null}
             {areMoviesLoading ? <Preloader /> : null}
             {moviesForRendering.length && moviesForRendering.length !== filteredMovies.length && pathname !== paths.savedMovies ? <MoreMovies handleClick={handleAddingMoreMovies} /> : null}

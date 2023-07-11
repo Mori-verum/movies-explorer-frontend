@@ -1,7 +1,6 @@
 class MainApi {
     constructor(config) {
         this._baseUrl = config.baseUrl;
-        this._headers = config.headers;
     }
 
     _returnJson(res) {
@@ -57,6 +56,17 @@ class MainApi {
         .catch((err) => console.log(err));
     }
 
+    updateUserInfo(userData) {
+        return this._request(`${this._baseUrl}/users/me`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(userData)
+        })
+    }
+
     getSavedMovies() {
         return this._request(`${this._baseUrl}/movies`, {
             method: "GET",
@@ -77,11 +87,18 @@ class MainApi {
             body: JSON.stringify(movieData)
         })
     }
-}
 
+    deleteMovie(id) {
+        return this._request(`${this._baseUrl}/movies/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+    }
+}
 
 export const mainApi = new MainApi({
     baseUrl: 'http://localhost:3000',
 });
-
-// "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY4YjZkNzM2ODk1YWFkZGQyNzU0ZGMiLCJpYXQiOjE2ODg0OTU4ODYsImV4cCI6MTY4OTEwMDY4Nn0.GJCS4NEFJaEGGDWMJKcNpMDCw3yCAMx-BRO607Jyea0"

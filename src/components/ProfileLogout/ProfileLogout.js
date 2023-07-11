@@ -14,7 +14,7 @@ function ProfileLogout(props) {
     return (
     <section className="profile-logout">
         <div className="profile-logout__container container">
-            <button type="button" onClick={handleLogout} className={props.isFormActive ? "profile-logout__button_disabled" : "profile-logout__button"}>Выйти из аккаунта</button>
+            <button type="button" onClick={handleLogout} className={`button profile-logout__button${!props.isFormActive ? "" : "_disabled"}`}>Выйти из аккаунта</button>
         </div>
     </section>
     )

@@ -25,6 +25,8 @@ function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const [isProfileEditing, setIsProfileEditing] = useState(false);
+
   const isHeaderVisible = Object.values(paths).includes(pathname)
     && (pathname !== paths.signIn)
     && (pathname !== paths.signUp);
@@ -47,9 +49,10 @@ function App() {
               }
               setLoggedIn(true);
               setUserData(userData);
-              navigate(paths.main, {replace: true})
+              navigate(paths.main, { replace: true })
             }
-          });
+          })
+          .catch(err => console.log(err));
       }
     }
   }, [loggedIn]);
@@ -70,50 +73,61 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem('token');
     setLoggedIn(false);
+    localStorage.clear();
+  }
+
+  function handleEditProfile(userData) {
+    mainApi.updateUserInfo(userData)
+      .then((user) => {
+        setUserData(user);
+        setIsProfileEditing(false);
+      })
+      .catch(err => console.log(err));
   }
 
   return (
-    <currentUserContext.Provider value={ userData }>
-    <div className="App">
-      {isHeaderVisible ? <Header windowSize={windowSize} loggedIn={loggedIn} /> : null}
-      <Routes>
-        <Route exact path={paths.main} element={<Main />} />
-        <Route path={paths.movies} element={<ProtectedRouteElement
-          element={MoviesTable}
-          loggedIn={loggedIn}
-          windowSize={windowSize}
-        />} />
-        <Route path={paths.savedMovies} element={<ProtectedRouteElement
-          element={MoviesTable}
-          loggedIn={loggedIn}
-        />} />
-        <Route path={paths.profile} element={<ProtectedRouteElement
-          element={Profile}
-          handleLogout={handleLogout}
-          // profileData={userData}
-          loggedIn={loggedIn}
-          windowSize={windowSize}
-        />} />
-        <Route path={paths.signUp} element={<PageWithForm
-          form={<RegisterForm />}
-          greetingText="Добро пожаловать!"
-          clickThroughText="Уже зарегистрированы?"
-          clickThroughPath={paths.signIn}
-          clickThroughLinkText="Войти"
-        />} />
-        <Route path={paths.signIn} element={<PageWithForm
-          form={<LoginForm handleLogin={handleLogin} />}
-          greetingText="Рады видеть!"
-          clickThroughText="Ещё не зарегистрированы?"
-          clickThroughPath={paths.signUp}
-          clickThroughLinkText="Регистрация"
-        />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      {isFooterVisible ? <Footer /> : null}
-    </div>
+    <currentUserContext.Provider value={userData}>
+      <div className="App">
+        {isHeaderVisible ? <Header windowSize={windowSize} loggedIn={loggedIn} /> : null}
+        <Routes>
+          <Route exact path={paths.main} element={<Main />} />
+          <Route path={paths.movies} element={<ProtectedRouteElement
+            element={MoviesTable}
+            loggedIn={loggedIn}
+            windowSize={windowSize}
+          />} />
+          <Route path={paths.savedMovies} element={<ProtectedRouteElement
+            element={MoviesTable}
+            loggedIn={loggedIn}
+          />} />
+          <Route path={paths.profile} element={<ProtectedRouteElement
+            element={Profile}
+            setIsProfileEditing={setIsProfileEditing}
+            isProfileEditing={isProfileEditing}
+            handleEditProfile={handleEditProfile}
+            handleLogout={handleLogout}
+            loggedIn={loggedIn}
+            windowSize={windowSize}
+          />} />
+          <Route path={paths.signUp} element={<PageWithForm
+            form={<RegisterForm />}
+            greetingText="Добро пожаловать!"
+            clickThroughText="Уже зарегистрированы?"
+            clickThroughPath={paths.signIn}
+            clickThroughLinkText="Войти"
+          />} />
+          <Route path={paths.signIn} element={<PageWithForm
+            form={<LoginForm handleLogin={handleLogin} />}
+            greetingText="Рады видеть!"
+            clickThroughText="Ещё не зарегистрированы?"
+            clickThroughPath={paths.signUp}
+            clickThroughLinkText="Регистрация"
+          />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        {isFooterVisible ? <Footer /> : null}
+      </div>
     </currentUserContext.Provider>
   );
 }

@@ -53,18 +53,6 @@
     outline: none;
 }
 
-.profile-edit__edit-button {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-family: 'Inter', Arial, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 16px;
-    color: var(--text-color);
-}
-
 .profile-edit__submit {
     cursor: pointer;
     height: 45px;
@@ -77,6 +65,26 @@
     color: var(--text-color);
     border: none;
     border-radius: 3px;
+}
+
+.profile-edit__submit:before {
+    content: "Сохранить"
+}
+
+.profile-edit__submit_disabled {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--text-color);
+}
+
+.profile-edit__submit_disabled:before {
+    content: "Редактировать"
 }
 
 .profile-edit__error-message {
