@@ -77,6 +77,7 @@ function AllMovies(props) {
    }, [])
 
    useEffect(() => {
+      setTooltip({ isVisible: false, message: "" });
       let uploadedMovies = filteredMovies.slice(0, moviesAmount);
       setMoviesForRendering(uploadedMovies);
       if (wereMoviesUploaded && !uploadedMovies.length) {
