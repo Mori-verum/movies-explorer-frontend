@@ -47,6 +47,7 @@ function LoginForm(props) {
                 label="E-mail"
                 placeholder="Введите email"
                 id="profile-email"
+                autoComplete="on"
             />
             <InputFieldset
                 onChange={handleChange}
@@ -57,6 +58,7 @@ function LoginForm(props) {
                 label="Пароль"
                 placeholder="Введите пароль"
                 id="profile-password"
+                autoComplete="off"
             />
         </Form>
     )

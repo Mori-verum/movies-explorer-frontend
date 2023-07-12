@@ -4,7 +4,7 @@ import StackItem from '../StackItem/StackItem';
 import { techStack } from '../../utils/config';
 
 function Techs() {
-    const stackItems = techStack.map((item) => <StackItem key={ item } text={ item } />);
+    const stackItems = techStack.map((item) => <StackItem key={ item.id } text={ item.text } />);
 
     return (
         <section className="techs">

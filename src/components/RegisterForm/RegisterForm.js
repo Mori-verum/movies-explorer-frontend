@@ -43,6 +43,7 @@ function RegisterForm(props) {
                 label="Имя"
                 placeholder="Введите имя"
                 id="profile-name"
+                autoComplete="on"
             />
             <InputFieldset
                 onChange={handleChange}
@@ -53,6 +54,7 @@ function RegisterForm(props) {
                 label="E-mail"
                 placeholder="Введите email"
                 id="profile-email"
+                autoComplete="on"
             />
             <InputFieldset
                 onChange={handleChange}
@@ -63,6 +65,7 @@ function RegisterForm(props) {
                 label="Пароль"
                 placeholder="Введите пароль"
                 id="profile-password"
+                autoComplete="off"
             />
         </Form>
     )

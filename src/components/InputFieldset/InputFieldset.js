@@ -14,6 +14,7 @@ function InputFieldset(props) {
                 id={props.id}
                 name={props.name}
                 className="fieldset__input"
+                autoComplete={props.autoComplete}
             />
             <span className="fieldset__validation-message">{props.validationMessage}</span>
         </fieldset>

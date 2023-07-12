@@ -62,8 +62,6 @@ function AllMovies(props) {
             setAllMovies(movies);
             if (!wereMoviesUploaded && !moviesForRendering.length) {
                setTooltip({ isVisible: true, message: "Для поиска введите ключевое слово" });
-            } else if (wereMoviesUploaded && !filteredMovies.length) {
-               setTooltip({ isVisible: true, message: "Ничего не найдено :(" });
             }
          })
          .catch(err => {
@@ -80,18 +78,13 @@ function AllMovies(props) {
 
    useEffect(() => {
       let uploadedMovies = filteredMovies.slice(0, moviesAmount);
-      // for (const movie of filteredMovies.slice(0, moviesAmount)) {
-      //    for (const savedMovie of savedMovies) {
-      //       if (savedMovie.movieId === movie.id) {
-      //          movie.liked = true;
-      //       }
-      //    }
-      //    uploadedMovies.push(movie);
-      // }
       setMoviesForRendering(uploadedMovies);
+      if (wereMoviesUploaded && !uploadedMovies.length) {
+         setTooltip({ isVisible: true, message: "Ничего не найдено :(" });
+      }
 
       localStorage.setItem('movies', JSON.stringify(uploadedMovies));
-   }, [savedMovies, moviesAmount, filteredMovies]);
+   }, [savedMovies, moviesAmount, filteredMovies, wereMoviesUploaded]);
 
    useEffect(() => {
       mainApi.getSavedMovies()
@@ -146,9 +139,10 @@ function AllMovies(props) {
 
    function handleDeleteMovie(movieId) {
       mainApi.deleteMovie(movieId)
-         .then(() => {
-            setSavedMovies((state) => state.filter((c) => c._id !== movieId))
+         .then((res) => {
+            return savedMovies.filter((c) => c._id !== movieId);
          })
+         .then((res) => setSavedMovies(res))
          .catch(err => console.log(err))
    }
 

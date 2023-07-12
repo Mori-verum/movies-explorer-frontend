@@ -9,7 +9,7 @@ function SearchForm({ getCards }) {
     const [searchData, setSearchData] = useState(pathname === paths.movies ? JSON.parse(localStorage.getItem('search-movies-data')) ?? {
         inputValue: "",
         isShortMovies: false
-    } : JSON.parse(localStorage.getItem('search-saved-movies-data')) ?? {
+    } : {
         inputValue: "",
         isShortMovies: false
     });
@@ -18,7 +18,7 @@ function SearchForm({ getCards }) {
         setSearchData(pathname === paths.movies ? JSON.parse(localStorage.getItem('search-movies-data')) ?? {
             inputValue: "",
             isShortMovies: false
-        } : JSON.parse(localStorage.getItem('search-saved-movies-data')) ?? {
+        } :  {
             inputValue: "",
             isShortMovies: false
         })
@@ -28,7 +28,7 @@ function SearchForm({ getCards }) {
         if (pathname === paths.movies) {
             localStorage.setItem('search-movies-data', JSON.stringify(searchData));
         } else {
-            localStorage.setItem('search-saved-movies-data', JSON.stringify(searchData));
+            // localStorage.setItem('search-saved-movies-data', JSON.stringify(searchData));
         }
     }, [searchData, pathname]);
 
