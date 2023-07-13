@@ -1,10 +1,8 @@
 import './Techs.css';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import StackItem from '../StackItem/StackItem';
-import { techStack } from '../../utils/config';
 
 function Techs() {
-    const stackItems = techStack.map((item) => <StackItem key={ item.id } text={ item.text } />);
 
     return (
         <section className="techs">
@@ -13,7 +11,13 @@ function Techs() {
                 <h3 className="techs__description-title">7 технологий</h3>
                 <p className="techs__description-subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
                 <ul className="techs__stack">
-                    { stackItems }
+                    <StackItem text="HTML" />
+                    <StackItem text="CSS" />
+                    <StackItem text="JS" />
+                    <StackItem text="React" />
+                    <StackItem text="Git" />
+                    <StackItem text="Express.js" />
+                    <StackItem text="mongoDB" />
                 </ul>
             </div>
         </section>
