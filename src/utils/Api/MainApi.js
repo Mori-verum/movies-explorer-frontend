@@ -7,21 +7,20 @@ class MainApi {
         if (res.ok) {
             return res.json();
         }
-
-        return Promise.reject("Ошибка:" + res.status);
+            return Promise.reject("Ошибка: " + res.status);
     }
 
     _request(url, options) {
         return fetch(url, options).then(this._returnJson);
     }
 
-    register(name, password, email) {
+    register(data) {
         return this._request(`${this._baseUrl}/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ name, password, email })
+            body: JSON.stringify(data)
         })
             .then((res) => {
                 return res;
@@ -29,13 +28,13 @@ class MainApi {
             .catch((err) => console.log(err));
     }
 
-    login(email, password) {
+    login(data) {
         return this._request(`${this._baseUrl}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify(data)
         })
             .then((data) => {
                 localStorage.setItem('token', data.token);

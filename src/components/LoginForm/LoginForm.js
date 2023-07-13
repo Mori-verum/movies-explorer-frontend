@@ -1,46 +1,23 @@
-import { useState } from "react";
 import Form from "../Form/Form";
 import InputFieldset from "../InputFieldset/InputFieldset";
-import { mainApi } from "../../utils/Api/MainApi";
-import { useNavigate } from 'react-router-dom';
-import { paths } from "../../utils/config";
+import { useInputValidation } from "../../utils/hooks/use-form-validation";
 
 function LoginForm(props) {
-    const navigate = useNavigate();
-    const [formValue, setFormValue] = useState({
-        email: '',
-        password: ''
-    })
+    const email = useInputValidation('E-mail', '', { isEmpty: true, isEmail: false });
+    const password = useInputValidation('Пароль', '', { isEmpty: true, minLength: 8 });
 
-    function handleChange(evt) {
-        const { name, value } = evt.target;
-        setFormValue({
-            ...formValue,
-            [name]: value
-        });
-    }
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        mainApi.login(formValue.email, formValue.password)
-            .then((data) => {
-                if (data.token) {
-                    setFormValue({
-                        email: '',
-                        password: ''
-                    });
-                    props.handleLogin();
-                    navigate(paths.main, { replace: true });
-                }
-            })
-            .catch(err => console.log(err));
+    function handleSubmit() {
+        props.handleLogin({password: password.inputValue, email: email.inputValue});
     }
 
     return (
-        <Form onSubmit={handleSubmit} formSubmitText="Войти">
+        <Form serverErrorMessage={props.loginMessage} handleSubmit={handleSubmit} isSubmitDisabled={!email.isValid || !password.isValid} formSubmitText="Войти">
             <InputFieldset
-                onChange={handleChange}
-                value={formValue.email}
+                validationMessage={email.validationMessage}
+                isDirty={email.isDirty}
+                value={email.inputValue}
+                onChange={email.handleInputChange}
+                onBlur={email.handleInputBlur}
                 required={true}
                 type="email"
                 name="email"
@@ -50,8 +27,11 @@ function LoginForm(props) {
                 autoComplete="on"
             />
             <InputFieldset
-                onChange={handleChange}
-                value={formValue.password}
+                validationMessage={password.validationMessage}
+                isDirty={password.isDirty}
+                value={password.inputValue}
+                onChange={password.handleInputChange}
+                onBlur={password.handleInputBlur}
                 required={true}
                 type="password"
                 name="password"

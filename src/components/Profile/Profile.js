@@ -9,7 +9,7 @@ function Profile(props) {
             <div className="profile">
                 <ProfileGreeting />
                 <ProfileEdit setIsProfileEditing={props.setIsProfileEditing} handleEditProfile={props.handleEditProfile} profileData={props.profileData} isFormActive={props.isProfileEditing} />
-                <ProfileLogout handleLogout={props.handleLogout} isFormActive={props.isProfileEditing} />
+                <ProfileLogout handleLogout={props.handleLogout} />
             </div>
         </main>
     )

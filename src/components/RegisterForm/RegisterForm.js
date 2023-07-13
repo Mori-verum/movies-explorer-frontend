@@ -1,42 +1,24 @@
-import { mainApi } from "../../utils/Api/MainApi";
 import Form from "../Form/Form";
 import InputFieldset from "../InputFieldset/InputFieldset";
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { paths } from "../../utils/config";
+import { useInputValidation } from "../../utils/hooks/use-form-validation";
 
 function RegisterForm(props) {
-    const navigate = useNavigate();
-    const [formValue, setFormValue] = useState({
-        name: '',
-        email: '',
-        password: '',
-    })
+    const name = useInputValidation('Имя', '', { isEmpty: true, minLength: 2});
+    const email = useInputValidation('E-mail', '', { isEmpty: true, isEmail: false });
+    const password = useInputValidation('Пароль', '', { isEmpty: true, minLength: 8 });
 
-    function handleChange(evt) {
-        const { name, value } = evt.target;
-        setFormValue({
-            ...formValue,
-            [name]: value
-        });
-    }
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        const { name, password, email } = formValue;
-        mainApi.register(name, password, email)
-        .then((res) => {
-            if(res) {
-                navigate(paths.signIn, { replace: true });
-            }
-        })
+    function handleSubmit() {
+        props.handleRegister({name: name.inputValue, password: password.inputValue, email: email.inputValue});
     }
 
     return (
-        <Form onSubmit={handleSubmit} formSubmitText="Зарегистрироваться">
+        <Form serverErrorMessage={props.registerMessage} handleSubmit={handleSubmit} isSubmitDisabled={!name.isValid || !email.isValid || !password.isValid} formSubmitText="Зарегистрироваться">
             <InputFieldset
-                onChange={handleChange}
-                value={formValue.name}
+                validationMessage={name.validationMessage}
+                isDirty={name.isDirty}
+                value={name.inputValue}
+                onChange={name.handleInputChange}
+                onBlur={name.handleInputBlur}
                 required={true}
                 type="text"
                 name="name"
@@ -46,8 +28,11 @@ function RegisterForm(props) {
                 autoComplete="on"
             />
             <InputFieldset
-                onChange={handleChange}
-                value={formValue.email}
+                validationMessage={email.validationMessage}
+                isDirty={email.isDirty}
+                value={email.inputValue}
+                onChange={email.handleInputChange}
+                onBlur={email.handleInputBlur}
                 required={true}
                 type="email"
                 name="email"
@@ -57,8 +42,11 @@ function RegisterForm(props) {
                 autoComplete="on"
             />
             <InputFieldset
-                onChange={handleChange}
-                value={formValue.password}
+                validationMessage={password.validationMessage}
+                isDirty={password.isDirty}
+                value={password.inputValue}
+                onChange={password.handleInputChange}
+                onBlur={password.handleInputBlur}
                 required={true}
                 type="password"
                 name="password"

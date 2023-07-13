@@ -34,7 +34,6 @@
 }
 
 .fieldset__validation-message {
-    display: none;
     margin-top: 10px;
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;

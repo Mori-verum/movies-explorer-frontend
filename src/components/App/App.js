@@ -22,6 +22,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({ name: '', email: '' });
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [loginMessage, setLoginMessage] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -69,13 +71,48 @@ function App() {
     };
   }, []);
 
-  function handleLogin() {
-    setLoggedIn(true);
+  function handleRegister(data) {
+    mainApi.register({
+      name: data.name,
+      email: data.email,
+      password: data.password
+    })
+      .then((res) => {
+        if (res) {
+          navigate(paths.signIn, { replace: true });
+        }
+      })
+      .catch(err => {
+        setRegisterMessage('Что-то пошло не так! Попробуйте ещё раз.');
+      });
+  }
+
+  useEffect(() => {
+    setIsProfileEditing(false);
+  }, [pathname])
+
+  function handleLogin(data) {
+    mainApi.login({
+      email: data.email,
+      password: data.password
+    })
+      .then((data) => {
+        if (data.token) {
+          setLoggedIn(true);
+        }
+      })
+      .then((res) => {
+        navigate(paths.main, { replace: true });
+      })
+      .catch(err => {
+        setLoginMessage('Что-то пошло не так! Попробуйте ещё раз.');
+      });
   }
 
   function handleLogout() {
     setLoggedIn(false);
     localStorage.clear();
+    navigate(paths.signIn, { replace: true });
   }
 
   function handleEditProfile(userData) {
@@ -112,14 +149,14 @@ function App() {
             windowSize={windowSize}
           />} />
           <Route path={paths.signUp} element={<PageWithForm
-            form={<RegisterForm />}
+            form={<RegisterForm handleRegister={handleRegister} registerMessage={registerMessage} />}
             greetingText="Добро пожаловать!"
             clickThroughText="Уже зарегистрированы?"
             clickThroughPath={paths.signIn}
             clickThroughLinkText="Войти"
           />} />
           <Route path={paths.signIn} element={<PageWithForm
-            form={<LoginForm handleLogin={handleLogin} />}
+            form={<LoginForm handleLogin={handleLogin} loginMessage={loginMessage} />}
             greetingText="Рады видеть!"
             clickThroughText="Ещё не зарегистрированы?"
             clickThroughPath={paths.signUp}

@@ -67,6 +67,11 @@
     border-radius: 3px;
 }
 
+.profile-edit__submit:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
 .profile-edit__submit:before {
     content: "Сохранить"
 }
@@ -88,8 +93,7 @@
 }
 
 .profile-edit__error-message {
-    display: none;
-    /* display: block; */
+    display: block;
     text-align: center;
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
