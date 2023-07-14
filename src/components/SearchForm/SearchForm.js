@@ -27,8 +27,6 @@ function SearchForm({ getCards }) {
     useEffect(() => {
         if (pathname === paths.movies) {
             localStorage.setItem('search-movies-data', JSON.stringify(searchData));
-        } else {
-            // localStorage.setItem('search-saved-movies-data', JSON.stringify(searchData));
         }
     }, [searchData, pathname]);
 
