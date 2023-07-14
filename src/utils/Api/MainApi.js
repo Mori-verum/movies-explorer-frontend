@@ -106,5 +106,5 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api.movie.stasy.nomoredomains.monster',
 });
