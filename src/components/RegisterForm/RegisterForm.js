@@ -1,18 +1,23 @@
 import Form from "../Form/Form";
 import InputFieldset from "../InputFieldset/InputFieldset";
-import { useInputValidation } from "../../utils/hooks/use-form-validation";
+import { useInputValidation } from "../../utils/hooks/use-input-validation";
 
 function RegisterForm(props) {
-    const name = useInputValidation('Имя', '', { isEmpty: true, minLength: 2});
+    const name = useInputValidation('Имя', '', { isEmpty: true, minLength: 2 });
     const email = useInputValidation('E-mail', '', { isEmpty: true, isEmail: false });
     const password = useInputValidation('Пароль', '', { isEmpty: true, minLength: 8 });
 
     function handleSubmit() {
-        props.handleRegister({name: name.inputValue, password: password.inputValue, email: email.inputValue});
+        props.handleRegister({ name: name.inputValue, password: password.inputValue, email: email.inputValue });
     }
 
     return (
-        <Form serverErrorMessage={props.registerMessage} handleSubmit={handleSubmit} isSubmitDisabled={!name.isValid || !email.isValid || !password.isValid} formSubmitText="Зарегистрироваться">
+        <Form
+            serverErrorMessage={props.registerMessage}
+            handleSubmit={handleSubmit}
+            isSubmitDisabled={!name.isValid || !email.isValid || !password.isValid}
+            formSubmitText={props.isLoadingMessage ? props.loadingMessage : "Зарегистрироваться"}
+        >
             <InputFieldset
                 validationMessage={name.validationMessage}
                 isDirty={name.isDirty}

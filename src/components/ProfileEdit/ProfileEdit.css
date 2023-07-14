@@ -72,10 +72,6 @@
     cursor: default;
 }
 
-.profile-edit__submit:before {
-    content: "Сохранить"
-}
-
 .profile-edit__submit_disabled {
     cursor: pointer;
     background-color: transparent;
@@ -86,10 +82,6 @@
     font-size: 13px;
     line-height: 16px;
     color: var(--text-color);
-}
-
-.profile-edit__submit_disabled:before {
-    content: "Редактировать"
 }
 
 .profile-edit__error-message {

@@ -1,14 +1,15 @@
 import './ProfileEdit.css'
 import React, { useContext } from "react";
 import currentUserContext from '../../contexts/currentUserContext';
-import { useInputValidation } from "../../utils/hooks/use-form-validation";
+import { useInputValidation } from "../../utils/hooks/use-input-validation";
 
 function ProfileEdit(props) {
     const currentUser = useContext(currentUserContext);
     const name = useInputValidation('Имя', currentUser.name, { isEmpty: true, minLength: 2, });
     const email = useInputValidation('E-mail', currentUser.email, { isEmpty: true, isEmail: false, });
 
-    const submitButtonClassName = `button profile-edit__submit${props.isFormActive ? "" : "_disabled"}`
+    const submitButtonClassName = `button profile-edit__submit${props.isFormActive ? "" : "_disabled"}`;
+    const submitButtonText = props.isFormActive ? (props.isLoadingMessage ? props.loadingMessage : "Сохранить") : "Редактировать";
 
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -34,7 +35,7 @@ function ProfileEdit(props) {
                         </fieldset>
                     </div>
                     <span className="profile-edit__error-message">{name.validationMessage || email.validationMessage}</span>
-                    <button disabled={!email.isValid || !name.isValid || ( props.isFormActive && email.inputValue === currentUser.email && name.inputValue === currentUser.name)} onClick={handleSubmit} type="submit" className={submitButtonClassName}></button>
+                    <button disabled={!email.isValid || !name.isValid || ( props.isFormActive && email.inputValue === currentUser.email && name.inputValue === currentUser.name)} onClick={handleSubmit} type="submit" className={submitButtonClassName}>{submitButtonText}</button>
                 </form>
             </div>
         </section>

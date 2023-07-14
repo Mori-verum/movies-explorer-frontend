@@ -24,6 +24,7 @@ function App() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const [loginMessage, setLoginMessage] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
+  const [loadingMessage, setLoadingMessage] = useState({ isVisible: false, message: "" });
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function App() {
               }
               setLoggedIn(true);
               setUserData(userData);
-              navigate(paths.main, { replace: true })
+              navigate(paths.movies, { replace: true })
             }
           })
           .catch(err => console.log(err));
@@ -72,19 +73,26 @@ function App() {
   }, []);
 
   function handleRegister(data) {
+    setRegisterMessage('');
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
     mainApi.register({
       name: data.name,
       email: data.email,
       password: data.password
     })
       .then((res) => {
-        if (res) {
+        if (res === 409) {
+          setRegisterMessage('Пользователь с таким email уже существует');
+        } else {
           navigate(paths.signIn, { replace: true });
         }
       })
       .catch(err => {
         setRegisterMessage('Что-то пошло не так! Попробуйте ещё раз.');
-      });
+      })
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
   }
 
   useEffect(() => {
@@ -92,21 +100,25 @@ function App() {
   }, [pathname])
 
   function handleLogin(data) {
+    setLoginMessage('');
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
     mainApi.login({
       email: data.email,
       password: data.password
     })
       .then((data) => {
-        if (data.token) {
+        if (data === 401) {
+          setLoginMessage('Неправильные логин или пароль');
+        } else if (data.token) {
           setLoggedIn(true);
         }
       })
-      .then((res) => {
-        navigate(paths.main, { replace: true });
-      })
       .catch(err => {
         setLoginMessage('Что-то пошло не так! Попробуйте ещё раз.');
-      });
+      })
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
   }
 
   function handleLogout() {
@@ -116,12 +128,16 @@ function App() {
   }
 
   function handleEditProfile(userData) {
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
     mainApi.updateUserInfo(userData)
       .then((user) => {
         setUserData(user);
         setIsProfileEditing(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
   }
 
   return (
@@ -141,6 +157,8 @@ function App() {
           />} />
           <Route path={paths.profile} element={<ProtectedRouteElement
             element={Profile}
+            isLoadingMessage={loadingMessage.isVisible}
+            loadingMessage={loadingMessage.message}
             setIsProfileEditing={setIsProfileEditing}
             isProfileEditing={isProfileEditing}
             handleEditProfile={handleEditProfile}
@@ -149,14 +167,24 @@ function App() {
             windowSize={windowSize}
           />} />
           <Route path={paths.signUp} element={<PageWithForm
-            form={<RegisterForm handleRegister={handleRegister} registerMessage={registerMessage} />}
+            form={<RegisterForm
+              handleRegister={handleRegister}
+              registerMessage={registerMessage}
+              isLoadingMessage={loadingMessage.isVisible}
+              loadingMessage={loadingMessage.message}
+            />}
             greetingText="Добро пожаловать!"
             clickThroughText="Уже зарегистрированы?"
             clickThroughPath={paths.signIn}
             clickThroughLinkText="Войти"
           />} />
           <Route path={paths.signIn} element={<PageWithForm
-            form={<LoginForm handleLogin={handleLogin} loginMessage={loginMessage} />}
+            form={<LoginForm
+              handleLogin={handleLogin}
+              loginMessage={loginMessage}
+              isLoadingMessage={loadingMessage.isVisible}
+              loadingMessage={loadingMessage.message}
+            />}
             greetingText="Рады видеть!"
             clickThroughText="Ещё не зарегистрированы?"
             clickThroughPath={paths.signUp}

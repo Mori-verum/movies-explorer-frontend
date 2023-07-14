@@ -6,8 +6,9 @@ class MainApi {
     _returnJson(res) {
         if (res.ok) {
             return res.json();
+        } else {
+            return Promise.reject(res.status);
         }
-            return Promise.reject("Ошибка: " + res.status);
     }
 
     _request(url, options) {
@@ -25,7 +26,10 @@ class MainApi {
             .then((res) => {
                 return res;
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                return err;
+            });
     }
 
     login(data) {
@@ -40,7 +44,10 @@ class MainApi {
                 localStorage.setItem('token', data.token);
                 return data;
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                return err;
+            });
     }
 
     getCurrentUser(token) {
