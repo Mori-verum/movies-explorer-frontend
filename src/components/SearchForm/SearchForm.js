@@ -18,7 +18,7 @@ function SearchForm({ getCards }) {
         setSearchData(pathname === paths.movies ? JSON.parse(localStorage.getItem('search-movies-data')) ?? {
             inputValue: "",
             isShortMovies: false
-        } :  {
+        } : {
             inputValue: "",
             isShortMovies: false
         })
@@ -31,14 +31,14 @@ function SearchForm({ getCards }) {
     }, [searchData, pathname]);
 
     function handleChange(evt) {
-        setSearchData((prev) => ({...prev, inputValue: evt.target.value}));
+        setSearchData((prev) => ({ ...prev, inputValue: evt.target.value }));
     }
 
     function handleSwitchShortMovies(evt) {
-        if(!searchData.isShortMovies) {
-            setSearchData((prev) => ({...prev, isShortMovies: true}));
+        if (!searchData.isShortMovies) {
+            setSearchData((prev) => ({ ...prev, isShortMovies: true }));
         } else {
-            setSearchData((prev) => ({...prev, isShortMovies: false}));
+            setSearchData((prev) => ({ ...prev, isShortMovies: false }));
         }
     }
 

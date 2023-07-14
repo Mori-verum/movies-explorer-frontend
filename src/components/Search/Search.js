@@ -5,8 +5,8 @@ function Search(props) {
     return (
         <section className="search">
             <div className="search__container container">
-            <SearchForm getCards={props.getCards} />
-            <span className="search__span"></span>
+                <SearchForm getCards={props.getCards} />
+                <span className="search__span"></span>
             </div>
         </section>
     )

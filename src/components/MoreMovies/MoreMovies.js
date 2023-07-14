@@ -5,7 +5,7 @@ function MoreMovies(props) {
     return (
         <section className="more-movies">
             <div className="more-movies__container container">
-                <MoreMoviesButton onClick={ props.handleClick } />
+                <MoreMoviesButton onClick={props.handleClick} />
             </div>
         </section>
     )

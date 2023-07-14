@@ -6,7 +6,7 @@ function Promo() {
     function handleClick(evt) {
         evt.preventDefault();
         const element = document.getElementById("#aboutProject");
-        element.scrollIntoView({behavior: "smooth"});
+        element.scrollIntoView({ behavior: "smooth" });
     }
 
     return (

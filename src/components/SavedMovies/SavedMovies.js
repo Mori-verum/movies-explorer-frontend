@@ -56,7 +56,7 @@ function SavedMovies(props) {
     }, [movies]);
 
     useEffect(() => {
-        if(wereMoviesUploaded && !filteredMovies.length) {
+        if (wereMoviesUploaded && !filteredMovies.length) {
             setTooltip({ isVisible: true, message: "Ничего не найдено :(" });
         } else if (filteredMovies.length) {
             setTooltip({ isVisible: false, message: "" });
@@ -67,10 +67,10 @@ function SavedMovies(props) {
     function getfilteredSavedCards(keyWord, isShortMovies) {
         if (isShortMovies) {
             setFilteredMovies(filterShortMovies(filterMovies(movies, keyWord)));
-         } else {
+        } else {
             setFilteredMovies(filterMovies(movies, keyWord));
-         }
-         setWereMoviesUploaded(true);
+        }
+        setWereMoviesUploaded(true);
     }
 
     function handleDeleteMovie(movieId) {
@@ -82,19 +82,19 @@ function SavedMovies(props) {
                 setSavedMovies(movies);
                 setFilteredMovies((prevMovies) => {
                     const moviesForRendering = [];
-                for (const prevMovie of prevMovies) {
-                    for (const movie of movies) {
-                        if(movie._id === prevMovie._id) {
-                            moviesForRendering.push(movie);
+                    for (const prevMovie of prevMovies) {
+                        for (const movie of movies) {
+                            if (movie._id === prevMovie._id) {
+                                moviesForRendering.push(movie);
+                            }
                         }
                     }
-                }
-                return moviesForRendering;
+                    return moviesForRendering;
                 });
-                
+
                 if (!movies.length) {
                     setTooltip({ isVisible: true, message: "Сохранённых фильмов нет" });
-                } 
+                }
             })
             .catch(err => console.log(err))
     }

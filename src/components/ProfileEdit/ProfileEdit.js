@@ -25,17 +25,17 @@ function ProfileEdit(props) {
             <div className="profile-edit__container container">
                 <form onSubmit={handleSubmit} className="profile-edit__form">
                     <div className="profile-edit__inputs-container">
-                        <fieldset  className="profile-edit__fieldset">
+                        <fieldset className="profile-edit__fieldset">
                             <label className="profile-edit__input-label" htmlFor="name">Имя</label>
-                            <input style={name.validationMessage ? {"color": "#ff004c"} : {"color": "var(--text-color)"}} onChange={name.handleInputChange} value={name.inputValue} disabled={!props.isFormActive} id="name" name="name" className="profile-edit__input" placeholder="Somebody"></input>
+                            <input style={name.validationMessage ? { "color": "#ff004c" } : { "color": "var(--text-color)" }} onChange={name.handleInputChange} value={name.inputValue} disabled={!props.isFormActive} id="name" name="name" className="profile-edit__input" placeholder="Somebody"></input>
                         </fieldset>
                         <fieldset className="profile-edit__fieldset">
                             <label className="profile-edit__input-label" htmlFor="email">E-mail</label>
-                            <input style={email.validationMessage ? {"color": "#ff004c"} : {"color": "var(--text-color)"}} onChange={email.handleInputChange} value={email.inputValue} disabled={!props.isFormActive} id="email" name="email" className="profile-edit__input" placeholder="something@example.ru"></input>
+                            <input style={email.validationMessage ? { "color": "#ff004c" } : { "color": "var(--text-color)" }} onChange={email.handleInputChange} value={email.inputValue} disabled={!props.isFormActive} id="email" name="email" className="profile-edit__input" placeholder="something@example.ru"></input>
                         </fieldset>
                     </div>
                     <span className="profile-edit__error-message">{name.validationMessage || email.validationMessage}</span>
-                    <button disabled={!email.isValid || !name.isValid || ( props.isFormActive && email.inputValue === currentUser.email && name.inputValue === currentUser.name)} onClick={handleSubmit} type="submit" className={submitButtonClassName}>{submitButtonText}</button>
+                    <button disabled={!email.isValid || !name.isValid || (props.isFormActive && email.inputValue === currentUser.email && name.inputValue === currentUser.name)} onClick={handleSubmit} type="submit" className={submitButtonClassName}>{submitButtonText}</button>
                 </form>
             </div>
         </section>

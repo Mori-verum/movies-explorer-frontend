@@ -58,8 +58,8 @@ class MainApi {
                 authorization: `Bearer ${token}`
             }
         })
-        .then((data) => data)
-        .catch((err) => console.log(err));
+            .then((data) => data)
+            .catch((err) => console.log(err));
     }
 
     updateUserInfo(userData) {

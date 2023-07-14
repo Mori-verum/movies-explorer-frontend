@@ -2,9 +2,9 @@
     height: 100%;
     display: grid;
     grid-template-areas:
-    "inputs"
-    "message"
-    "submit";
+        "inputs"
+        "message"
+        "submit";
 }
 
 .form__inputs-container {
