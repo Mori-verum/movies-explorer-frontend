@@ -13,11 +13,8 @@ SPA приложение, интерактивная страница с авт�
 * Именование по БЭМ
 * работа с сервером и API-запросами
 
-**Ссылка на макет**
-https://disk.yandex.ru/d/UPCwTK-YLQO8qw
+**Ссылка на макет** - https://disk.yandex.ru/d/UPCwTK-YLQO8qw
 
-**Pull request**
-https://github.com/Mori-verum/movies-explorer-frontend/pull/2
+**Pull request** - https://github.com/Mori-verum/movies-explorer-frontend/pull/2
 
-**Публичный адрес**
-https://stasy.nomoredomains.monster/movies
+**Публичный адрес** - https://stasy.nomoredomains.monster/movies
