@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { paths } from '../../utils/config';
+import { PATHS } from '../../utils/config';
 
 import Search from '../Search/Search';
 
@@ -12,6 +12,7 @@ import Preloader from '../Preloader/Preloader';
 import SavedMoviesCardList from '../SavedMoviesCardList/SavedMoviesCardList';
 
 function SavedMovies(props) {
+    const [isSearchFormActive, setIsSearchFormActive] = useState(false);
     const [areMoviesLoading, setAreMoviesLoading] = useState(false); //для отображения прелоадера
     const [wereMoviesUploaded, setWereMoviesUploaded] = useState(false);
     const [filteredMovies, setFilteredMovies] = useState([]);
@@ -29,6 +30,7 @@ function SavedMovies(props) {
         if (!movies.length) {
             setAreMoviesLoading(true);
         }
+        setIsSearchFormActive(false);
         mainApi.getSavedMovies()
             .then(res => {
                 setSavedMovies(res);
@@ -38,7 +40,7 @@ function SavedMovies(props) {
                 }
             })
             .catch(err => {
-                if (pathname === paths.savedMovies) {
+                if (pathname === PATHS.savedMovies) {
                     console.log(err);
                     setTooltip({
                         isVisible: true,
@@ -48,6 +50,7 @@ function SavedMovies(props) {
             })
             .finally(() => {
                 setAreMoviesLoading(false);
+                setIsSearchFormActive(true);
             })
     }, [])
 
@@ -101,7 +104,10 @@ function SavedMovies(props) {
 
     return (
         <main className="main">
-            <Search getCards={getfilteredSavedCards} />
+            <Search
+                getCards={getfilteredSavedCards}
+                isSearchFormActive={isSearchFormActive}
+            />
             <SavedMoviesCardList
                 handleDeleteMovie={handleDeleteMovie}
                 movies={filteredMovies}

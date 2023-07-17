@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { moviesForRenderingAmount } from '../../utils/config';
+import { MOVIES_FOR_RENDERING_AMOUNT, WINDOW_SIZE_1280, WINDOW_SIZE_480 } from '../../utils/config';
 
 import Search from '../Search/Search';
 import MoreMovies from '../MoreMovies/MoreMovies';
@@ -13,6 +13,7 @@ import Preloader from '../Preloader/Preloader';
 import AllMoviesCardList from '../AllMoviesCardList/AllMoviesCardList';
 
 function AllMovies(props) {
+   const [isSearchFormActive, setIsSearchFormActive] = useState(false);
    const [areMoviesLoading, setAreMoviesLoading] = useState(false); //для отображения прелоадера
    const [wereMoviesUploaded, setWereMoviesUploaded] = useState(false);
    const [allMovies, setAllMovies] = useState(
@@ -41,15 +42,15 @@ function AllMovies(props) {
    }, [allMovies, filteredMovies, savedMovies, moviesForRendering]);
 
    useEffect(() => {
-      if (props.windowSize >= 1280) {
-         setInitialMoviesAmount(moviesForRenderingAmount.largeWindowInitial);
-         setMoviesToAdd(moviesForRenderingAmount.largeWindowAdded);
-      } else if (props.windowSize < 1280 && props.windowSize >= 480) {
-         setInitialMoviesAmount(moviesForRenderingAmount.middleWindowInitial);
-         setMoviesToAdd(moviesForRenderingAmount.middleWindowAdded);
-      } else if (props.windowSize < 480) {
-         setInitialMoviesAmount(moviesForRenderingAmount.smallWindowInitial);
-         setMoviesToAdd(moviesForRenderingAmount.smallWindowAdded);
+      if (props.windowSize >= WINDOW_SIZE_1280) {
+         setInitialMoviesAmount(MOVIES_FOR_RENDERING_AMOUNT.largeInitialCardsAmount);
+         setMoviesToAdd(MOVIES_FOR_RENDERING_AMOUNT.largeCardsCountToAdd);
+      } else if (props.windowSize < WINDOW_SIZE_1280 && props.windowSize >= WINDOW_SIZE_480) {
+         setInitialMoviesAmount(MOVIES_FOR_RENDERING_AMOUNT.middleInitialCardsAmount);
+         setMoviesToAdd(MOVIES_FOR_RENDERING_AMOUNT.middleCardsCountToAdd);
+      } else if (props.windowSize < WINDOW_SIZE_480) {
+         setInitialMoviesAmount(MOVIES_FOR_RENDERING_AMOUNT.smallInitialCardsAmount);
+         setMoviesToAdd(MOVIES_FOR_RENDERING_AMOUNT.smallCardsCountToAdd);
       }
    }, [props.windowSize]);
 
@@ -57,6 +58,7 @@ function AllMovies(props) {
       if (!moviesForRendering.length) {
          setAreMoviesLoading(true);
       }
+      setIsSearchFormActive(false);
       moviesApi.getAllMovies()
          .then(movies => {
             setAllMovies(movies);
@@ -73,6 +75,7 @@ function AllMovies(props) {
          })
          .finally(() => {
             setAreMoviesLoading(false);
+            setIsSearchFormActive(true);
          })
    }, [])
 
@@ -88,10 +91,14 @@ function AllMovies(props) {
    }, [savedMovies, moviesAmount, filteredMovies, wereMoviesUploaded]);
 
    useEffect(() => {
+      setIsSearchFormActive(false);
       mainApi.getSavedMovies()
          .then(res => setSavedMovies(res))
          .catch(err => {
             console.log(err);
+         })
+         .finally(() => {
+            setIsSearchFormActive(true);
          })
    }, [])
 
@@ -149,7 +156,10 @@ function AllMovies(props) {
 
    return (
       <main className="main">
-         <Search getCards={getFilteredCards} />
+         <Search
+            getCards={getFilteredCards}
+            isSearchFormActive={isSearchFormActive}
+         />
          <AllMoviesCardList
             handleDeleteMovie={handleDeleteMovie}
             handleSaveMovie={handleSaveMovie}

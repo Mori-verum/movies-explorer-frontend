@@ -23,13 +23,6 @@ class MainApi {
             },
             body: JSON.stringify(data)
         })
-            .then((res) => {
-                return res;
-            })
-            .catch((err) => {
-                console.log(err);
-                return err;
-            });
     }
 
     login(data) {
@@ -44,10 +37,6 @@ class MainApi {
                 localStorage.setItem('token', data.token);
                 return data;
             })
-            .catch((err) => {
-                console.log(err);
-                return err;
-            });
     }
 
     getCurrentUser(token) {
@@ -58,8 +47,6 @@ class MainApi {
                 authorization: `Bearer ${token}`
             }
         })
-            .then((data) => data)
-            .catch((err) => console.log(err));
     }
 
     updateUserInfo(userData) {
@@ -106,5 +93,6 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-    baseUrl: 'https://api.movie.stasy.nomoredomains.monster',
+    // baseUrl: 'https://api.movie.stasy.nomoredomains.monster',
+    baseUrl: 'http://localhost:3000',
 });

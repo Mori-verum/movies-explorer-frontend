@@ -9,6 +9,9 @@ function Profile(props) {
             <div className="profile">
                 <ProfileGreeting />
                 <ProfileEdit
+                    setProfileEditingMessage={props.setProfileEditingMessage}
+                    isSuccessful={props.isSuccessful}
+                    profileEditingMessage={props.profileEditingMessage}
                     isLoadingMessage={props.isLoadingMessage}
                     loadingMessage={props.loadingMessage}
                     setIsProfileEditing={props.setIsProfileEditing}

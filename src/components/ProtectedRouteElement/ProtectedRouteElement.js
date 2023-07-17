@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { paths } from "../../utils/config";
+import { PATHS } from "../../utils/config";
 
 const ProtectedRouteElement = ({ element: Component, ...props }) => {
     return (
-        props.loggedIn ? <Component {...props} /> : <Navigate to={paths.signIn} replace />
+        props.loggedIn ? <Component {...props} /> : <Navigate to={PATHS.main} replace />
     )
 }
 

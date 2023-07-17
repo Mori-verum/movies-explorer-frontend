@@ -1,10 +1,13 @@
 import './MoviesCard.css'
 
 function MoviesCard(props) {
+    const hours = Math.trunc(props.duration/60);
+    const minutes = props.duration % 60;
+
     return (
         <article className="card">
             <p className="card__name">{props.name}</p>
-            <p className="card__duration">{props.duration} минут</p>
+            <p className="card__duration">{hours ? `${hours} ч.` : ''}  {minutes ? `${minutes} мин.` : ''}</p>
             <a
                 className="card__link link"
                 href={props.trailer}

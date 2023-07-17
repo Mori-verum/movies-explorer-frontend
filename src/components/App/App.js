@@ -10,7 +10,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import LoginForm from '../LoginForm/LoginForm';
 
-import { paths } from '../../utils/config';
+import { PATHS } from '../../utils/config';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import { mainApi } from '../../utils/Api/MainApi';
 import currentUserContext from '../../contexts/currentUserContext';
@@ -25,19 +25,20 @@ function App() {
   const [loginMessage, setLoginMessage] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
   const [loadingMessage, setLoadingMessage] = useState({ isVisible: false, message: "" });
+  const [profileEditingMessage, setProfileEditingMessage] = useState({ isSuccessful: false, message: '' });
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const [isProfileEditing, setIsProfileEditing] = useState(false);
 
-  const isHeaderVisible = Object.values(paths).includes(pathname)
-    && (pathname !== paths.signIn)
-    && (pathname !== paths.signUp);
-  const isFooterVisible = Object.values(paths).includes(pathname)
-    && (pathname !== paths.signIn)
-    && (pathname !== paths.signUp)
-    && (pathname !== paths.profile);
+  const isHeaderVisible = Object.values(PATHS).includes(pathname)
+    && (pathname !== PATHS.signIn)
+    && (pathname !== PATHS.signUp);
+  const isFooterVisible = Object.values(PATHS).includes(pathname)
+    && (pathname !== PATHS.signIn)
+    && (pathname !== PATHS.signUp)
+    && (pathname !== PATHS.profile);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -53,7 +54,7 @@ function App() {
               }
               setLoggedIn(true);
               setUserData(userData);
-              navigate(paths.movies, { replace: true })
+              navigate(pathname, { replace: true });
             }
           })
           .catch(err => console.log(err));
@@ -81,14 +82,21 @@ function App() {
       password: data.password
     })
       .then((res) => {
-        if (res === 409) {
-          setRegisterMessage('Пользователь с таким email уже существует');
-        } else {
-          navigate(paths.signIn, { replace: true });
-        }
+        return mainApi.login({
+          email: data.email,
+          password: data.password
+        })
+      })
+      .then(() => {
+        setLoggedIn(true);
+        navigate(PATHS.movies, { replace: true });
       })
       .catch(err => {
-        setRegisterMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        if (err === 409) {
+          setRegisterMessage('Пользователь с таким email уже существует');
+        } else {
+          setRegisterMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        }
       })
       .finally(() => {
         setLoadingMessage({ isVisible: false, message: "" })
@@ -97,6 +105,7 @@ function App() {
 
   useEffect(() => {
     setIsProfileEditing(false);
+    setProfileEditingMessage({ isSuccessful: false, message: '' });
   }, [pathname])
 
   function handleLogin(data) {
@@ -107,14 +116,16 @@ function App() {
       password: data.password
     })
       .then((data) => {
-        if (data === 401) {
-          setLoginMessage('Неправильные логин или пароль');
-        } else if (data.token) {
+        if (data.token) {
           setLoggedIn(true);
         }
       })
       .catch(err => {
-        setLoginMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        if (err === 401) {
+          setLoginMessage('Неправильные логин или пароль');
+        } else {
+          setLoginMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        }
       })
       .finally(() => {
         setLoadingMessage({ isVisible: false, message: "" })
@@ -124,7 +135,7 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     localStorage.clear();
-    navigate(paths.signIn, { replace: true });
+    navigate(PATHS.main, { replace: true });
   }
 
   function handleEditProfile(userData) {
@@ -132,9 +143,16 @@ function App() {
     mainApi.updateUserInfo(userData)
       .then((user) => {
         setUserData(user);
+        setProfileEditingMessage({ isSuccessful: true, message: "Данные успешно изменены" });
         setIsProfileEditing(false);
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        if (err === 409) {
+          setProfileEditingMessage({ isSuccessful: false, message: "Пользователь с таким email уже существует" });
+        } else {
+          setProfileEditingMessage({ isSuccessful: false, message: "Что-то пошло не так! Попробуйте ещё раз." });
+        }
+      })
       .finally(() => {
         setLoadingMessage({ isVisible: false, message: "" })
       })
@@ -145,18 +163,21 @@ function App() {
       <div className="App">
         {isHeaderVisible ? <Header windowSize={windowSize} loggedIn={loggedIn} /> : null}
         <Routes>
-          <Route exact path={paths.main} element={<Main />} />
-          <Route path={paths.movies} element={<ProtectedRouteElement
+          <Route exact path={PATHS.main} element={<Main />} />
+          <Route path={PATHS.movies} element={<ProtectedRouteElement
             element={AllMovies}
             loggedIn={loggedIn}
             windowSize={windowSize}
           />} />
-          <Route path={paths.savedMovies} element={<ProtectedRouteElement
+          <Route path={PATHS.savedMovies} element={<ProtectedRouteElement
             element={SavedMovies}
             loggedIn={loggedIn}
           />} />
-          <Route path={paths.profile} element={<ProtectedRouteElement
+          <Route path={PATHS.profile} element={<ProtectedRouteElement
             element={Profile}
+            setProfileEditingMessage={setProfileEditingMessage}
+            isSuccessful={profileEditingMessage.isSuccessful}
+            profileEditingMessage={profileEditingMessage.message}
             isLoadingMessage={loadingMessage.isVisible}
             loadingMessage={loadingMessage.message}
             setIsProfileEditing={setIsProfileEditing}
@@ -164,9 +185,9 @@ function App() {
             handleEditProfile={handleEditProfile}
             handleLogout={handleLogout}
             loggedIn={loggedIn}
-            windowSize={windowSize}
           />} />
-          <Route path={paths.signUp} element={<PageWithForm
+          <Route path={PATHS.signUp} element={<PageWithForm
+            loggedIn={loggedIn}
             form={<RegisterForm
               handleRegister={handleRegister}
               registerMessage={registerMessage}
@@ -175,10 +196,11 @@ function App() {
             />}
             greetingText="Добро пожаловать!"
             clickThroughText="Уже зарегистрированы?"
-            clickThroughPath={paths.signIn}
+            clickThroughPath={PATHS.signIn}
             clickThroughLinkText="Войти"
           />} />
-          <Route path={paths.signIn} element={<PageWithForm
+          <Route path={PATHS.signIn} element={<PageWithForm
+            loggedIn={loggedIn}
             form={<LoginForm
               handleLogin={handleLogin}
               loginMessage={loginMessage}
@@ -187,7 +209,7 @@ function App() {
             />}
             greetingText="Рады видеть!"
             clickThroughText="Ещё не зарегистрированы?"
-            clickThroughPath={paths.signUp}
+            clickThroughPath={PATHS.signUp}
             clickThroughLinkText="Регистрация"
           />} />
           <Route path="*" element={<NotFoundPage />} />

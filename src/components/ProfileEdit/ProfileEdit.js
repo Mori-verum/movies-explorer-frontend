@@ -16,6 +16,7 @@ function ProfileEdit(props) {
         if (props.isFormActive) {
             props.handleEditProfile({ name: name.inputValue, email: email.inputValue });
         } else {
+            props.setProfileEditingMessage({ isSuccessful: false, message: '' });
             props.setIsProfileEditing(!props.isFormActive);
         }
     }
@@ -34,7 +35,7 @@ function ProfileEdit(props) {
                             <input style={email.validationMessage ? { "color": "#ff004c" } : { "color": "var(--text-color)" }} onChange={email.handleInputChange} value={email.inputValue} disabled={!props.isFormActive} id="email" name="email" className="profile-edit__input" placeholder="something@example.ru"></input>
                         </fieldset>
                     </div>
-                    <span className="profile-edit__error-message">{name.validationMessage || email.validationMessage}</span>
+                    <span style={props.isSuccessful ? { "color": "var(--accent-color)" } : { "color": "#ff004c" }} className="profile-edit__message">{name.validationMessage || email.validationMessage || props.profileEditingMessage}</span>
                     <button disabled={!email.isValid || !name.isValid || (props.isFormActive && email.inputValue === currentUser.email && name.inputValue === currentUser.name)} onClick={handleSubmit} type="submit" className={submitButtonClassName}>{submitButtonText}</button>
                 </form>
             </div>
