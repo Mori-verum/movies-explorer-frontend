@@ -1,0 +1,16 @@
+.movies-table-tooltip__container {
+    display: flex;
+    justify-content: center;
+}
+
+.movies-table-tooltip__text {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #4c4c4c;
+    margin: 0;
+}

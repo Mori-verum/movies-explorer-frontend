@@ -1,5 +1,5 @@
-import { paths } from '../../utils/config';
-import { Link, useLocation } from 'react-router-dom';
+import { PATHS, WINDOW_SIZE_780 } from '../../utils/config';
+import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 import Burger from '../Burger/Burger'
 import ModalMenu from '../ModalMenu/ModalMenu';
@@ -7,16 +7,30 @@ import { useState } from 'react';
 
 function Navigation(props) {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
-    const { pathname } = useLocation();
 
     const headerForAuthUser = (
         <>
-            {props.windowSize <= 780 && <Burger onClick={openModalMenu} />}
-            {props.windowSize > 780 &&
+            {props.windowSize <= WINDOW_SIZE_780 && <Burger onClick={openModalMenu} />}
+            {props.windowSize > WINDOW_SIZE_780 &&
                 <>
-                    <Link className="navigation__link navigation__link_path_movies link" to={paths.movies}>Фильмы</Link>
-                    <Link className="navigation__link navigation__link_path_saved-movies link" to={paths.savedMovies}>Сохранённые фильмы</Link>
-                    <Link className='navigation__link navigation__link_path_profile link' to={paths.profile}></Link>
+                    <NavLink
+                        className={({ isActive }) => isActive ?
+                            "navigation__link navigation__link_active navigation__link_path_movies link" :
+                            "navigation__link navigation__link_path_movies link"
+                        }
+                        to={PATHS.movies}
+                    >Фильмы</NavLink>
+                    <NavLink
+                        className={({ isActive }) => isActive ?
+                            "navigation__link navigation__link_active navigation__link_path_saved-movies link" :
+                            "navigation__link navigation__link_path_saved-movies link"
+                        }
+                        to={PATHS.savedMovies}
+                    >Сохранённые фильмы</NavLink>
+                    <NavLink
+                        className='navigation__link navigation__link_path_profile link'
+                        to={PATHS.profile}
+                    ></NavLink>
                 </>
             }
         </>
@@ -24,8 +38,8 @@ function Navigation(props) {
 
     const headerForUnauthUser = (
         <>
-            <Link className="navigation__link navigation__link_path_signup link" to={paths.signUp}>Регистрация</Link>
-            <Link className="navigation__link navigation__link_path_signin link" to={paths.signIn}>Войти</Link>
+            <NavLink className="navigation__link navigation__link_path_signup link" to={PATHS.signUp}>Регистрация</NavLink>
+            <NavLink className="navigation__link navigation__link_path_signin link" to={PATHS.signIn}>Войти</NavLink>
         </>
     )
 
@@ -47,22 +61,34 @@ function Navigation(props) {
                 {links}
             </div>
             <ModalMenu isMenuVisible={isMenuVisible} onClose={closeModalMenu}>
-                <Link className={pathname === paths.main ?
-                    "navigation__link navigation__link_active navigation__link_path_main link" :
-                    "navigation__link navigation__link_path_main link"
-                } to={paths.main}>Главная</Link>
-                <Link className={pathname === paths.movies ?
-                    "navigation__link navigation__link_active navigation__link_path_movies link" :
-                    "navigation__link navigation__link_path_movies link"
-                } to={paths.movies}>Фильмы</Link>
-                <Link className={pathname === paths.savedMovies ?
-                    "navigation__link navigation__link_active navigation__link_path_saved-movies link" :
-                    "navigation__link navigation__link_path_saved-movies link"
-                } to={paths.savedMovies}>Сохранённые фильмы</Link>
-                <Link className={pathname === paths.profile ?
-                    "navigation__link navigation__link_active navigation__link_path_profile link" :
-                    "navigation__link navigation__link_path_profile link"
-                } to={paths.profile}></Link>
+                <NavLink
+                    to={PATHS.main}
+                    className={({ isActive }) => isActive ?
+                        "navigation__link navigation__link_active navigation__link_path_main link" :
+                        "navigation__link navigation__link_path_main link"
+                    }
+                >Главная</NavLink>
+                <NavLink
+                    to={PATHS.movies}
+                    className={({ isActive }) => isActive ?
+                        "navigation__link navigation__link_active navigation__link_path_movies link" :
+                        "navigation__link navigation__link_path_movies link"
+                    }
+                >Фильмы</NavLink>
+                <NavLink
+                    to={PATHS.savedMovies}
+                    className={({ isActive }) => isActive ?
+                        "navigation__link navigation__link_active navigation__link_path_saved-movies link" :
+                        "navigation__link navigation__link_path_saved-movies link"
+                    }
+                >Сохранённые фильмы</NavLink>
+                <NavLink
+                    to={PATHS.profile}
+                    className={({ isActive }) => isActive ?
+                        "navigation__link navigation__link_active navigation__link_path_profile link" :
+                        "navigation__link navigation__link_path_profile link"
+                    }
+                ></NavLink>
             </ModalMenu>
         </nav>
     )

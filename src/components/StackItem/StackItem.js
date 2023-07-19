@@ -1,9 +1,9 @@
 import './StackItem.css'
 
-function StackItem({ key, text }) {
+function StackItem({ text }) {
     return (
-        <li key={key} className="stack-item">
-            <p className="stack-item__text">{ text }</p>
+        <li className="stack-item">
+            <p className="stack-item__text">{text}</p>
         </li>
     )
 }

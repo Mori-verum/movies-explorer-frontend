@@ -1,14 +1,20 @@
 import './Form.css'
 
 function Form(props) {
+
+    function onSubmit(evt) {
+        evt.preventDefault();
+        props.handleSubmit();
+    }
+
     return (
-                <form className="form">
-                    <div className="form__inputs-container">
-                        { props.children }
-                    </div>
-                    <span className="form__validation-message">Something was wrong</span>
-                    <button type="submit" className="form__submit button">{ props.buttonText }</button>
-                </form>
+        <form onSubmit={onSubmit} noValidate className="form">
+            <div className="form__inputs-container">
+                {props.children}
+            </div>
+            <span className="form__server-error-message">{props.serverErrorMessage}</span>
+            <button disabled={props.isSubmitDisabled} type="submit" className="form__submit button">{props.formSubmitText}</button>
+        </form>
     )
 }
 

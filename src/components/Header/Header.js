@@ -7,10 +7,10 @@ function Header(props) {
     let { pathname } = useLocation();
 
     return (
-        <header className={ pathname !== "/" ? "header" : "header header_landing"}>
+        <header className={pathname !== "/" ? "header" : "header header_landing"}>
             <div className="header__container container">
                 <Logo />
-                <Navigation windowSize={ props.windowSize } loggedIn={ props.loggedIn } />
+                <Navigation windowSize={props.windowSize} loggedIn={props.loggedIn} />
             </div>
         </header>
     )

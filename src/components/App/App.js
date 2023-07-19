@@ -1,113 +1,222 @@
-import React,  { useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import './App.css';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import MoviesTable from '../MoviesTable/MoviesTable'
 import Profile from '../Profile/Profile';
 import PageWithForm from '../PageWithForm/PageWithForm';
 import Main from '../Main/Main';
-import InputFieldset from '../InputFieldset/InputFieldset';
-
-import { paths } from '../../utils/config';
-
-import { cards, cardsSavedMovies } from '../../utils/cards';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import LoginForm from '../LoginForm/LoginForm';
+
+import { PATHS } from '../../utils/config';
+import RegisterForm from '../RegisterForm/RegisterForm';
+import { mainApi } from '../../utils/Api/MainApi';
+import currentUserContext from '../../contexts/currentUserContext';
+import AllMovies from '../AllMovies/AllMovies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({ name: '', email: '' });
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [loginMessage, setLoginMessage] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
+  const [loadingMessage, setLoadingMessage] = useState({ isVisible: false, message: "" });
+  const [profileEditingMessage, setProfileEditingMessage] = useState({ isSuccessful: false, message: '' });
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  //состояние авторизации пользователя пока переключается вручную
-  const loggedIn = true;
+  const [isProfileEditing, setIsProfileEditing] = useState(false);
 
-  const isHeaderVisible = Object.values(paths).includes(pathname)
-    && (pathname !== paths.signIn)
-    && (pathname !== paths.signUp);
-  const isFooterVisible = Object.values(paths).includes(pathname)
-    && (pathname !== paths.signIn)
-    && (pathname !== paths.signUp)
-    && (pathname !== paths.profile);
+  const isHeaderVisible = Object.values(PATHS).includes(pathname)
+    && (pathname !== PATHS.signIn)
+    && (pathname !== PATHS.signUp);
+  const isFooterVisible = Object.values(PATHS).includes(pathname)
+    && (pathname !== PATHS.signIn)
+    && (pathname !== PATHS.signUp)
+    && (pathname !== PATHS.profile);
 
-  const inputsForRegister = (
-    <>
-      <InputFieldset
-        required={true}
-        type="text"
-        name="name"
-        label="Имя"
-        placeholder="Введите имя"
-        id="profile-name"
-        />
-      <InputFieldset
-        required={true}
-        type="email"
-        name="email"
-        label="E-mail"
-        placeholder="Введите email"
-        id="profile-email"
-      />
-      <InputFieldset
-        required={true}
-        type="password"
-        name="password"
-        label="Пароль"
-        placeholder="Введите пароль"
-        id="profile-password"
-      />
-    </>
-  )
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
 
-  const inputsForLogin = (
-    <>
-      <InputFieldset
-        required={true}
-        type="email"
-        name="email"
-        label="E-mail"
-        placeholder="Введите email"
-        id="profile-email"
-      />
-      <InputFieldset
-        required={true}
-        type="password"
-        name="password"
-        label="Пароль"
-        placeholder="Введите пароль"
-        id="profile-password"
-      />
-    </>
-  )
+      if (token) {
+        mainApi.getCurrentUser(token)
+          .then((res) => {
+            if (res) {
+              const userData = {
+                name: res.name,
+                email: res.email
+              }
+              setLoggedIn(true);
+              setUserData(userData);
+              navigate(pathname, { replace: true });
+            }
+          })
+          .catch(err => console.log(err));
+      }
+    }
+  }, [loggedIn]);
+
+  //отслеживаем изменение размеров окна
+  useEffect(() => {
+    const handleResize = (event) => {
+      setWindowSize(event.target.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  function handleRegister(data) {
+    setRegisterMessage('');
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
+    mainApi.register({
+      name: data.name,
+      email: data.email,
+      password: data.password
+    })
+      .then((res) => {
+        return mainApi.login({
+          email: data.email,
+          password: data.password
+        })
+      })
+      .then(() => {
+        setLoggedIn(true);
+        navigate(PATHS.movies, { replace: true });
+      })
+      .catch(err => {
+        if (err === 409) {
+          setRegisterMessage('Пользователь с таким email уже существует');
+        } else {
+          setRegisterMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        }
+      })
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
+  }
+
+  useEffect(() => {
+    setIsProfileEditing(false);
+    setProfileEditingMessage({ isSuccessful: false, message: '' });
+  }, [pathname])
+
+  function handleLogin(data) {
+    setLoginMessage('');
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
+    mainApi.login({
+      email: data.email,
+      password: data.password
+    })
+      .then((data) => {
+        if (data.token) {
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => {
+        if (err === 401) {
+          setLoginMessage('Неправильные логин или пароль');
+        } else {
+          setLoginMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        }
+      })
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
+  }
+
+  function handleLogout() {
+    setLoggedIn(false);
+    localStorage.clear();
+    navigate(PATHS.main, { replace: true });
+  }
+
+  function handleEditProfile(userData) {
+    setLoadingMessage({ isVisible: true, message: "Загрузка..." })
+    mainApi.updateUserInfo(userData)
+      .then((user) => {
+        setUserData(user);
+        setProfileEditingMessage({ isSuccessful: true, message: "Данные успешно изменены" });
+        setIsProfileEditing(false);
+      })
+      .catch(err => {
+        if (err === 409) {
+          setProfileEditingMessage({ isSuccessful: false, message: "Пользователь с таким email уже существует" });
+        } else {
+          setProfileEditingMessage({ isSuccessful: false, message: "Что-то пошло не так! Попробуйте ещё раз." });
+        }
+      })
+      .finally(() => {
+        setLoadingMessage({ isVisible: false, message: "" })
+      })
+  }
 
   return (
-    <div className="App">
-      {isHeaderVisible ? <Header windowSize={ windowSize } loggedIn={loggedIn} /> : null}
-      <Routes>
-        <Route exact path={paths.main} element={<Main />} />
-        <Route path={paths.movies} element={<MoviesTable cards={cards} />} />
-        <Route path={paths.savedMovies} element={<MoviesTable cards={cardsSavedMovies} />} />
-        <Route path={paths.profile} element={<Profile />} />
-        <Route path={paths.signUp} element={<PageWithForm
-          formInputs={inputsForRegister}
-          greetingText="Добро пожаловать!"
-          formSubmitText="Зарегистрироваться"
-          clickThroughText="Уже зарегистрированы?"
-          clickThroughPath={paths.signIn}
-          clickThroughLinkText="Войти"
-        />} />
-        <Route path={paths.signIn} element={<PageWithForm
-          formInputs={inputsForLogin}
-          greetingText="Рады видеть!"
-          formSubmitText="Войти"
-          clickThroughText="Ещё не зарегистрированы?"
-          clickThroughPath={paths.signUp}
-          clickThroughLinkText="Регистрация"
-        />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      {isFooterVisible ? <Footer /> : null}
-    </div>
+    <currentUserContext.Provider value={userData}>
+      <div className="App">
+        {isHeaderVisible ? <Header windowSize={windowSize} loggedIn={loggedIn} /> : null}
+        <Routes>
+          <Route exact path={PATHS.main} element={<Main />} />
+          <Route path={PATHS.movies} element={<ProtectedRouteElement
+            element={AllMovies}
+            loggedIn={loggedIn}
+            windowSize={windowSize}
+          />} />
+          <Route path={PATHS.savedMovies} element={<ProtectedRouteElement
+            element={SavedMovies}
+            loggedIn={loggedIn}
+          />} />
+          <Route path={PATHS.profile} element={<ProtectedRouteElement
+            element={Profile}
+            setProfileEditingMessage={setProfileEditingMessage}
+            isSuccessful={profileEditingMessage.isSuccessful}
+            profileEditingMessage={profileEditingMessage.message}
+            isLoadingMessage={loadingMessage.isVisible}
+            loadingMessage={loadingMessage.message}
+            setIsProfileEditing={setIsProfileEditing}
+            isProfileEditing={isProfileEditing}
+            handleEditProfile={handleEditProfile}
+            handleLogout={handleLogout}
+            loggedIn={loggedIn}
+          />} />
+          <Route path={PATHS.signUp} element={<PageWithForm
+            loggedIn={loggedIn}
+            form={<RegisterForm
+              handleRegister={handleRegister}
+              registerMessage={registerMessage}
+              isLoadingMessage={loadingMessage.isVisible}
+              loadingMessage={loadingMessage.message}
+            />}
+            greetingText="Добро пожаловать!"
+            clickThroughText="Уже зарегистрированы?"
+            clickThroughPath={PATHS.signIn}
+            clickThroughLinkText="Войти"
+          />} />
+          <Route path={PATHS.signIn} element={<PageWithForm
+            loggedIn={loggedIn}
+            form={<LoginForm
+              handleLogin={handleLogin}
+              loginMessage={loginMessage}
+              isLoadingMessage={loadingMessage.isVisible}
+              loadingMessage={loadingMessage.message}
+            />}
+            greetingText="Рады видеть!"
+            clickThroughText="Ещё не зарегистрированы?"
+            clickThroughPath={PATHS.signUp}
+            clickThroughLinkText="Регистрация"
+          />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        {isFooterVisible ? <Footer /> : null}
+      </div>
+    </currentUserContext.Provider>
   );
 }
 

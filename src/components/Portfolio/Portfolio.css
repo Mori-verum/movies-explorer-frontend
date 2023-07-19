@@ -33,7 +33,7 @@
     .portfolio {
         margin-top: 95px;
     }
-  }
+}
 
 @media (max-width: 650px) {
     .portfolio {
@@ -51,4 +51,4 @@
     .portfolio__project-list {
         margin: 40px 0 0;
     }
-  }
+}

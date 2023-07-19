@@ -1,21 +1,24 @@
-import { useLocation } from 'react-router-dom';
 import './MoviesCard.css'
-import { paths } from '../../utils/config'
 
 function MoviesCard(props) {
-    let { pathname } = useLocation();
-    const isLiked = false;
-
-    const button = pathname === paths.main ? <button className="card__button button card__button_act_drop"></button> : <button className={isLiked ? "card__button button card__button_enabled" : "card__button button card__button_act_save"}></button>;
+    const hours = Math.trunc(props.duration/60);
+    const minutes = props.duration % 60;
 
     return (
         <article className="card">
-            <p className="card__name">{props.card.nameRU}</p>
-            <p className="card__duration">{props.card.duration} минут</p>
-            <a className="card__link link" href={props.card.trailerLink} target="_blank" rel="noreferrer">
-                <img className="card__img" alt={props.card.nameRu} src={props.card.image} />
+            <p className="card__name">{props.name}</p>
+            <p className="card__duration">{hours ? `${hours} ч.` : ''}  {minutes ? `${minutes} мин.` : ''}</p>
+            <a
+                className="card__link link"
+                href={props.trailer}
+                target="_blank"
+                rel="noreferrer">
+                <img
+                    className="card__img"
+                    alt={props.name}
+                    src={props.image} />
             </a>
-            {button}
+            {props.children}
         </article>
     )
 }

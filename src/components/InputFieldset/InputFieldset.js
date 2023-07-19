@@ -5,6 +5,9 @@ function InputFieldset(props) {
         <fieldset className="fieldset">
             <label className="fieldset__input-label" htmlFor={props.name}>{props.label}</label>
             <input
+                onBlur={props.onBlur}
+                onChange={props.onChange}
+                value={props.value}
                 required={props.required}
                 pattern={props.pattern ?? null}
                 type={props.type ?? ''}
@@ -12,8 +15,9 @@ function InputFieldset(props) {
                 id={props.id}
                 name={props.name}
                 className="fieldset__input"
+                autoComplete={props.autoComplete}
             />
-            <span className="fieldset__validation-message">{props.validationMessage}</span>
+            {(props.isDirty && props.validationMessage) && <span className="fieldset__validation-message">{props.validationMessage}</span>}
         </fieldset>
     )
 }

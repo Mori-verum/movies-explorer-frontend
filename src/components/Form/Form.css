@@ -1,11 +1,10 @@
 .form {
     height: 100%;
-    /* margin: 40px auto 0; */
     display: grid;
     grid-template-areas:
-    "inputs"
-    "message"
-    "submit";
+        "inputs"
+        "message"
+        "submit";
 }
 
 .form__inputs-container {
@@ -14,7 +13,9 @@
     gap: 20px;
 }
 
-.form__validation-message {
+.form__server-error-message {
+    margin: 68px auto 0;
+    text-align: center;
     grid-area: message;
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
@@ -22,11 +23,10 @@
     font-size: 10px;
     line-height: 12px;
     color: #ee3465;
-    margin: 10px 0 0;
 }
 
 .form__submit {
-    margin: 68px 0 0;
+    margin: 10px 0 0;
     grid-area: submit;
     border: none;
     border-radius: 3px;
@@ -39,6 +39,11 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+}
+
+.form__submit:disabled {
+    opacity: .5;
+    cursor: default;
 }
 
 @media (max-width: 450px) {

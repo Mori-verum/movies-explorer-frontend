@@ -19,6 +19,10 @@
     color: var(--text-color)
 }
 
+.search-form__input:disabled {
+    opacity: .5;
+}
+
 .search-form__submit {
     cursor: pointer;
     min-width: 44px;
@@ -28,6 +32,11 @@
     background-color: var(--button-color);
     border-radius: 8px;
     position: relative;
+}
+
+.search-form__submit:disabled {
+    opacity: .5;
+    cursor: default;
 }
 
 .search-form__submit:before {

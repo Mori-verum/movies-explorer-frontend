@@ -53,18 +53,6 @@
     outline: none;
 }
 
-.profile-edit__edit-button {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-family: 'Inter', Arial, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 16px;
-    color: var(--text-color);
-}
-
 .profile-edit__submit {
     cursor: pointer;
     height: 45px;
@@ -79,16 +67,31 @@
     border-radius: 3px;
 }
 
-.profile-edit__error-message {
-    display: none;
-    /* display: block; */
+.profile-edit__submit:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.profile-edit__submit_disabled {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--text-color);
+}
+
+.profile-edit__message {
+    display: block;
     text-align: center;
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
-    color: #ff004c;
     margin-bottom: 20px;
 }
 
